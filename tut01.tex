@@ -1,0 +1,143 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{ifthen}
+\usepackage{tcolorbox}
+\usepackage{marginnote}
+\usepackage[scheme=plain]{ctex}
+
+% \newboolean{MinkowskiProof}
+% \setboolean{MinkowskiProof}{true} % Set to true to include the proof of Minkowski's inequality
+
+% 定理环境定义（按节编号，各环境独立计数）
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{proposition}{Proposition}[section]
+\newtheorem{definition}{Definition}[section]
+\newtheorem{example}{Example}[section]
+\newtheorem{corollary}{Corollary}[section]
+\newtheorem{remark}{Remark}[section]
+
+\begin{document}
+
+\begin{center}
+\Large\textbf{
+Functional Analysis\\
+\vspace{1em}
+Tutorial 1}
+\date{}
+\end{center}
+\vspace{2em}
+
+\section{Course Information}
+\subsection{Grading}
+Grades will be a weighted combination of the scores of homework assignments (20\%), a couple of bi-weekly quizzes (15\%), a midterm exam (25\%) and a final exam (40\%). The exam schedule is:
+\begin{itemize}
+    \item Midterm Exam: 25th March, in class.
+    \item Final Exam: 6th May, in class.
+\end{itemize}
+\subsection{Homework}
+There will be weekly homework assignments. The homework will be posted on the bb, and will be due at the beginning of tutorial (TBD) on the due date. Late homework will not be accepted. 
+
+\subsection{Contact Information}
+\begin{itemize}
+    \item TA Name: 辛起 (Qi Xin)
+    \begin{itemize}
+        \item Email: 223010069@link.cuhk.edu.cn
+        \item Office Hours: 5:15-6:15pm, Wednesday, ZR322 (or by appointment). 
+        \item Appointment in advance is highly recommended.
+    \end{itemize}
+\end{itemize}
+
+\subsection{Textbook}
+\begin{itemize}
+    \item \textbf{Main Textbook:} \textit{Introductory Functional Analysis with Applications}, Erwin Kreyszig, Wiley, 1978.
+    \item \textbf{Reference Books (My personal recommendation):}
+    \begin{itemize}
+        \item \textit{泛函分析讲义}, 张恭庆， 林源渠 编著， 高等教育出版社， 2004.
+        \item \textit{Functional Analysis}, Yosida, Springer, 6th edition, 1980.
+    \end{itemize}
+\end{itemize}
+
+\section{Quiz Problem}
+\begin{proposition}
+    The space $C[a,b]$ with the metric
+    \[
+    d(f,g) = \max_{x \in [a,b]} |f(x) - g(x)|
+    \]
+    is complete, but is incomplete with the metric
+    \[d_1(f,g) = \int_a^b |f(x) - g(x)| \, dx.\]
+\end{proposition}
+\begin{proof}
+    Let $(f_n)$ be a Cauchy sequence in $C[a,b]$ with respect to the metric $d$. For each $x \in [a,b]$, the sequence $(f_n(x))$ is a Cauchy sequence in $\mathbb{C}$, and hence converges to some limit $f(x)$. Define the function $f: [a,b] \to \mathbb{C}$ by $f(x) = \lim_{n \to \infty} f_n(x)$. We will show that $f$ is continuous and that $f_n \to f$ in $C[a,b]$. Since $(f_n)$ is Cauchy, for every $\epsilon > 0$, there exists an integer $N$ such that for all $m,n \geq N$, we have
+    \[d(f_n,f_m) = \max_{x \in [a,b]} |f_n(x) - f_m(x)| < \epsilon.\]
+    Taking the limit as $m \to \infty$, we get
+    \[\max_{x \in [a,b]} |f_n(x) - f(x)| \leq \epsilon.\]
+    Thus $f_n$ converges uniformly to $f$, and hence $f$ is continuous. Therefore, $C[a,b]$ is complete with respect to the metric $d$.
+
+    To show that $C[a,b]$ is incomplete with respect to the metric $d_1$, consider the sequence of functions $(f_n)$ defined by
+    \[f_n(x) = \begin{cases}
+    n x, & 0 \leq x \leq \frac{1}{n}, \\
+    1, & \frac{1}{n} < x \leq 1
+    \end{cases}.\]
+    Each $f_n$ is continuous on $[0,1]$. We will show that $(f_n)$ is a Cauchy sequence in $C[0,1]$ with respect to the metric $d_1$, but does not converge to any function in $C[0,1]$. For $m,n \geq 1$, we have
+    \[d_1(f_n,f_m) = \int_0^1 |f_n(x) - f_m(x)| \, dx \leq \int_0^{\max(\frac{1}{n},\frac{1}{m})} |f_n(x) - f_m(x)| \, dx \leq \max(\frac{1}{n},\frac{1}{m}).\]
+    Thus, for every $\epsilon > 0$, there exists an integer $N$ such that for all $m,n \geq N$, we have
+    \[d_1(f_n,f_m) < \epsilon.\]
+    Therefore, $(f_n)$ is a Cauchy sequence in $C[0,1]$ with respect to the metric $d_1$. However, the pointwise limit of $(f_n)$ is the function
+    \[f(x) = \begin{cases}
+    0, & x = 0, \\
+    1, & 0 < x \leq 1
+    \end{cases},\]
+    which is not continuous on $[0,1]$. Hence, $(f_n)$ does not converge to any function in $C[0,1]$ with respect to the metric $d_1$. This shows that $C[a,b]$ is incomplete with respect to the metric $d_1$.
+\end{proof}
+
+
+\section{Tutorial Problems}
+\begin{example}
+    Minkowski's inequality states that for any $p \geq 1$ and any sequences $x = (\xi_j)$ and $y = (\eta_j)$ in $\ell^p$, we have
+    \[\|x + y\|_p \leq \|x\|_p + \|y\|_p.\]
+\end{example}
+\begin{proof}[Proof of Minkowski's Inequality]
+        We prove the Minkowski's inequality in three steps.
+        \begin{itemize}
+            \item \textbf{Step 1:} Prove Young's inequality: for any $a,b \geq 0$ and $p,q > 1$ such that $\frac{1}{p} + \frac{1}{q} = 1$, we have
+            \[
+            ab \leq \frac{a^p}{p} + \frac{b^q}{q}.
+            \]
+            \textbf{Hint:} Use the convexity of the exponential function.
+            \item \textbf{Step 2:} Prove Hölder's inequality: for any sequences of non-negative numbers $(a_j)$ and $(b_j)$, we have
+            \[
+            \sum_{j=1}^\infty a_j b_j \leq \left( \sum_{j=1}^\infty a_j^p \right)^{1/p} \left( \sum_{j=1}^\infty b_j^q \right)^{1/q}.
+            \]
+            \item \textbf{Step 3:} Use Hölder's inequality to prove Minkowski's inequality: for any sequences $x = (\xi_j)$ and $y = (\eta_j)$ in $\ell^p$, we have
+            \[
+            \left( \sum_{j=1}^\infty |\xi_j + \eta_j|^p \right)^{1/p} \leq \left( \sum_{j=1}^\infty |\xi_j|^p \right)^{1/p} + \left( \sum_{j=1}^\infty |\eta_j|^p \right)^{1/p}.
+            \] 
+        \end{itemize}
+        For step 1, we can use the convexity of the exponential function to show that for any $t \in [0,1]$,
+        \[e^{t \ln a + (1-t) \ln b} \leq t e^{\ln a} + (1-t) e^{\ln b} = t a + (1-t) b.\]
+        Setting $t = \frac{1}{p}$ and rearranging the terms gives Young's inequality.
+
+        For step 2, let $A = \left( \sum_{j=1}^\infty a_j^p \right)^{1/p}$ and $B = \left( \sum_{j=1}^\infty b_j^q \right)^{1/q}$, and define normalized sequences $\tilde{a}_j = \frac{a_j}{A}$ and $\tilde{b}_j = \frac{b_j}{B}$. Applying Young's inequality to each term $\tilde{a}_j \tilde{b}_j$ and summing over $j$, we obtain 
+        \[\sum_{j=1}^\infty \tilde{a}_j \tilde{b}_j \leq \frac{1}{p} \sum_{j=1}^\infty \tilde{a}_j^p + \frac{1}{q} \sum_{j=1}^\infty \tilde{b}_j^q = \frac{1}{p} + \frac{1}{q} = 1.\]
+        Multiplying both sides by $AB$ gives Hölder's inequality.
+
+
+        Finally, for step 3, let $u_j = |\xi_j|$ and $v_j = |\eta_j|$. Then it suffices to show that
+        \[\left( \sum_{j=1}^\infty (u_j + v_j)^p \right)^{1/p} \leq \left( \sum_{j=1}^\infty u_j^p \right)^{1/p} + \left( \sum_{j=1}^\infty v_j^p \right)^{1/p}.\]
+        Notice that 
+        \[(u_j + v_j)^p = (u_j + v_j)^{p-1} u_j + (u_j + v_j)^{p-1} v_j.\]
+        Applying Hölder's inequality to the sequences $(u_j)$ and $((u_j + v_j)^{p-1})$, and similarly to $(v_j)$ and $((u_j + v_j)^{p-1})$, we get
+        \[\sum_{j=1}^\infty (u_j + v_j)^p \leq \left( \sum_{j=1}^\infty u_j^p \right)^{1/p} \left( \sum_{j=1}^\infty (u_j + v_j)^p \right)^{(p-1)/p} + \left( \sum_{j=1}^\infty v_j^p \right)^{1/p} \left( \sum_{j=1}^\infty (u_j + v_j)^p \right)^{(p-1)/p}.\]
+        If $\sum_{j=1}^\infty (u_j + v_j)^p = 0$, the inequality is trivial. Otherwise, dividing both sides by $\left( \sum_{j=1}^\infty (u_j + v_j)^p \right)^{(p-1)/p}$, we obtain 
+        \[\left( \sum_{j=1}^\infty (u_j + v_j)^p \right)^{1/p} \leq \left( \sum_{j=1}^\infty u_j^p \right)^{1/p} + \left( \sum_{j=1}^\infty v_j^p \right)^{1/p},\]
+        which completes the proof of Minkowski's inequality.
+    \end{proof}
+
+
+
+
+\end{document}
