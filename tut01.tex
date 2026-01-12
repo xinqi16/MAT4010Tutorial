@@ -137,7 +137,69 @@ There will be weekly homework assignments. The homework will be posted on the bb
         which completes the proof of Minkowski's inequality.
     \end{proof}
 
+    \begin{definition}[Convergence]
+    Let $(X,\mathcal{T})$ be a topological space. A sequence $(x_n)$ in $X$ is said to converge to a point $x \in X$ if for every open set $U \in \mathcal{T}$ containing $x$, there exists an integer $N$ such that for all $n \geq N$, we have $x_n \in U$. We denote this by $x_n \to x$.
+\end{definition}
+One can use sequences to characterize topological notions.
+\begin{enumerate}
+    \item A point $x_0$ is a limit point of $M$ if and only if there exists a sequence $(x_n)$ in $M$ such that $x_n \to x_0$ and $x_n \neq x_0$ for all $n$.
+    \item Let $F \subset X$ be closed. A point $x$ is in $F$ if and only if there exists a sequence $(x_n)$ in $F$ such that $x_n \to x$.
+    \item A function $f: X \to Y$ between two topological spaces is continuous if and only if for every sequence $(x_n)$ in $X$ that converges to a point $x \in X$, the sequence $(f(x_n))$ converges to $f(x)$ in $Y$.
+    \item A set $M$ is dense in $X$ if and only if for every point $x \in X$, there exists a sequence $(x_n)$ in $M$ such that $x_n \to x$.
+    \item A function $f: X \to Y$ between two topological spaces is continuous if and only if 
+    \[x_n \to x \text{ in } X \implies f(x_n) \to f(x) \text{ in } Y.\]
+\end{enumerate}
+\begin{remark}
+    Notice that a single point space has no limit points.
+\end{remark}
 
+\begin{definition}[Compactness]
+    A subset $K\subset X$ is called sequentially compact if every sequence in $K$ has a subsequence that converges to a point in $K$.
+
+    A subset $K\subset X$ is called compact if every open cover of $K$ has a finite subcover. That is, for any collection of open sets $\{U_\alpha\}_{\alpha \in A}$ such that
+    \[K \subset \bigcup_{\alpha \in A} U_\alpha,\]
+    there exists a finite subset $\{\alpha_1, \alpha_2, \ldots, \alpha_n\} \subset A$ such that
+    \[K \subset U_{\alpha_1} \cup U_{\alpha_2} \cup \ldots \cup U_{\alpha_n}.\]
+\end{definition}
+\begin{proposition}
+    In a metric space, a subset is compact if and only if it is sequentially compact.
+\end{proposition}
+The proof is skipped in class but provided here for completeness.
+\begin{proof}
+    (Sketch) We will prove both directions of the equivalence.
+
+    \textbf{(Compact $\implies$ Sequentially Compact)}: Let $K \subset X$ be a compact subset of a metric space $(X,d)$. Consider any sequence $(x_n)$ in $K$. We will show that there exists a subsequence of $(x_n)$ that converges to a point in $K$.
+
+    Since $K$ is compact, for each integer $m \geq 1$, we can cover $K$ with finitely many open balls of radius $\frac{1}{m}$. By the pigeonhole principle, there exists at least one ball that contains infinitely many terms of the sequence $(x_n)$. We can select a subsequence $(x_{n_k})$ that lies entirely within this ball. Repeating this process for each $m$, we obtain a nested sequence of balls with radii tending to zero. The intersection of these balls contains exactly one point, say $x \in K$. The subsequence $(x_{n_k})$ converges to $x$.
+
+    \textbf{(Sequentially Compact $\implies$ Compact)}: Let $K \subset X$ be a sequentially compact subset of a metric space $(X,d)$. We will show that every open cover of $K$ has a finite subcover.
+
+    Suppose, for the sake of contradiction, that there exists an open cover $\{U_\alpha\}_{\alpha \in A}$ of $K$ that does not have a finite subcover. We can construct a sequence $(x_n)$ in $K$ such that each $x_n$ is not contained in any finite union of the sets in the cover. Since $K$ is sequentially compact, there exists a subsequence $(x_{n_k})$ that converges to some point $x \in K$. However, since $\{U_\alpha\}_{\alpha \in A}$ is an open cover of $K$, there exists some $\alpha_0 \in A$ such that $x \in U_{\alpha_0}$. By the definition of convergence, there exists an integer $N$ such that for all $k \geq N$, we have $x_{n_k} \in U_{\alpha_0}$. This contradicts our construction of the sequence $(x_n)$.
+
+    Therefore, every open cover of $K$ must have a finite subcover, and thus $K$ is compact.
+\end{proof}
+
+\begin{remark}
+    The equivalence between compactness and sequential compactness does not hold in general topological spaces. There exist topological spaces that are compact but not sequentially compact, and vice versa.
+\end{remark}
+
+\begin{theorem}
+    Let $(X,d)$ be a metric space and $K \subset X$ be compact. Then K is closed and bounded.
+\end{theorem}
+\begin{proposition}
+    In $\mathbb{R}^n$ or $\mathbb{C}^n$ with the standard Euclidean metric, a subset is compact if and only if it is closed and bounded.
+\end{proposition}
+\begin{proof}
+    This is a direct consequence of the Heine-Borel theorem.
+\end{proof}
+However, the above proposition does not hold in general metric spaces. For example, in the space $\ell^\infty$, the closed unit ball
+\[B = \{ x \in \ell^\infty \mid d(x,0) \leq 1 \}\]
+is closed and bounded but not compact.
+
+The following result holds in general topological space. 
+\begin{theorem}
+    Let $K$ be a compact (resp. sequentially compact) subset of a topological space $X$ and $F$ be a closed subset of $X$. Then $F$ is also compact (resp. sequentially compact).
+\end{theorem}
 
 
 \end{document}
