@@ -1,0 +1,220 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{ifthen}
+\usepackage{tcolorbox}
+\usepackage{marginnote}
+\usepackage[colorlinks=true]{hyperref}
+\usepackage{bookmark}
+\usepackage{xcolor}
+
+\newboolean{MinkowskiProof}
+\setboolean{MinkowskiProof}{true} % Set to true to include the proof of Minkowski's inequality
+
+\input{note_style.tex}
+
+% \newenvironment{oldcontent}{\begin{tcolorbox}[colback=gray!10,colframe=gray!50,title=上节已讲]}{\end{tcolorbox}}
+\newcommand{\covered}{\marginnote{\footnotesize Last time covered}}
+
+
+\begin{document}
+
+% \title{MAT 1}
+
+% \maketitle
+
+% \title{MAT5620: Assignments 1}
+% \author{}
+% \date{}
+% \maketitle
+% {Please submit your answers as a PDF file with a name containing your student ID + ASS No. like “123456XXX ASS4.pdf” to BB.}
+
+% \centerline{Due by Sept. 17 Wednesday, 23:59, Week 3}
+\begin{center}
+\Large\textbf{
+Functional Analysis\\
+\vspace{1em}
+Tutorial 2}
+\date{}
+\end{center}
+\vspace{2em}
+
+\tableofcontents
+
+\section{Assignments}
+\begin{problem}
+		Show that in the space $s$, we have $x_n\to x$ if and only if $\xi_j^{(n)}\to\xi_j$ for all $j = 1,2,\cdots$, where $x_n = (\xi_j^{(n)})$ and $x=(\xi_j)$. Prove that $s$ is complete.
+	\end{problem}
+    \begin{proof}[Solution]
+        The space $s$ is the space of all real (or complex) sequences $x = (\xi_1, \xi_2, \dots)$ equipped with the metric
+    \[
+    d(x,y) = \sum_{j=1}^\infty \frac{1}{2^j} \frac{|\xi_j - \eta_j|}{1 + |\xi_j - \eta_j|}.
+    \]
+    Let $x_n = (\xi_j^{(n)})_{j=1}^\infty$ and $x = (\xi_j)_{j=1}^\infty$.
+
+    \textbf{Part 1:} $x_n \to x$ in $s$ iff $\xi_j^{(n)} \to \xi_j$ for each $j$.
+
+    ($\Rightarrow$) Suppose $d(x_n, x) \to 0$. For a fixed $j$,
+    \[
+    \frac{1}{2^j} \frac{|\xi_j^{(n)} - \xi_j|}{1 + |\xi_j^{(n)} - \xi_j|} \le d(x_n, x) \to 0,
+    \]
+    hence $\frac{|\xi_j^{(n)} - \xi_j|}{1 + |\xi_j^{(n)} - \xi_j|} \to 0$. Since the map $t \mapsto \frac{t}{1+t}$ is increasing for $t \ge 0$, this implies $|\xi_j^{(n)} - \xi_j| \to 0$, so $\xi_j^{(n)} \to \xi_j$.
+
+    ($\Leftarrow$) Assume $\xi_j^{(n)} \to \xi_j$ for each $j$. Let $\varepsilon > 0$. Choose $N$ such that $\sum_{j=N+1}^\infty \frac{1}{2^j} < \frac{\varepsilon}{2}$.
+    For $j = 1, \dots, N$, pick $M_j$ such that for all $n \ge M_j$,
+    \[
+    |\xi_j^{(n)} - \xi_j| < \frac{\varepsilon}{2}.
+    \]
+    Set $M = \max_{1 \le j \le N} M_j$. For $n \ge M$ and $j \le N$,
+    \[
+    \frac{|\xi_j^{(n)} - \xi_j|}{1 + |\xi_j^{(n)} - \xi_j|} \le |\xi_j^{(n)} - \xi_j| < \frac{\varepsilon}{2},
+    \]
+    hence
+    \[
+    \sum_{j=1}^N \frac{1}{2^j} \frac{|\xi_j^{(n)} - \xi_j|}{1 + |\xi_j^{(n)} - \xi_j|} < \frac{\varepsilon}{2} \sum_{j=1}^N \frac{1}{2^j} < \frac{\varepsilon}{2}.
+    \]
+    For $j > N$,
+    \[
+    \frac{1}{2^j} \frac{|\xi_j^{(n)} - \xi_j|}{1 + |\xi_j^{(n)} - \xi_j|} \le \frac{1}{2^j},
+    \]
+    so
+    \[
+    \sum_{j=N+1}^\infty \frac{1}{2^j} \frac{|\xi_j^{(n)} - \xi_j|}{1 + |\xi_j^{(n)} - \xi_j|} \le \sum_{j=N+1}^\infty \frac{1}{2^j} < \frac{\varepsilon}{2}.
+    \]
+    Adding the two parts, for all $n \ge M$, $d(x_n, x) < \varepsilon$. Hence $x_n \to x$ in $s$.
+
+    \textbf{Part 2:} $s$ is complete.
+
+    Let $(x_n)_{n=1}^\infty$ be Cauchy in $s$. For each fixed $j$, the inequality
+    \[
+    \frac{1}{2^j} \frac{|\xi_j^{(n)} - \xi_j^{(m)}|}{1 + |\xi_j^{(n)} - \xi_j^{(m)}|} \le d(x_n, x_m)
+    \]
+    shows that $(\xi_j^{(n)})_{n=1}^\infty$ is Cauchy in $\mathbb{R}$ (or $\mathbb{C}$), hence convergent. Therefore $s$ is complete.
+    \end{proof}
+	
+	\begin{problem}
+		The distance from a point $x$ to a non-empty subset $B$ of $(X,d)$ is defined to be 
+		\[ D(x, B) = \inf\{d(x,b) : b \in B\}. \]
+		Show that for any $x,y\in X$,
+		\[ D(x,B) - D(y,B) \leq d(x,y). \]
+	\end{problem}
+    \begin{proof}
+        For any $b \in B$, by the triangle inequality,
+    \[
+    d(x,b) \le d(x,y) + d(y,b).
+    \]
+    Taking the infimum over all $b \in B$ on the right side, we get
+    \[
+    d(x,b) \le d(x,y) + D(y,B).
+    \]
+    Taking the infimum over all $b \in B$ on the left side, we have
+    \[
+    D(x,B) \le d(x,y) + D(y,B).
+    \]
+    Rearranging gives
+    \[
+    D(x,B) - D(y,B) \le d(x,y).
+    \]
+    \end{proof}
+	
+	\begin{problem}
+		The distance between two non-empty subsets $A,B$ of $(X,d)$ is defined to be
+		\[ D(A,B) = \inf\{d(a,b) : a \in A, b \in B\}. \]
+		Show that $D$ does not define a metric on the power set of $X$ (the set of all subsets of $X$).
+	\end{problem}
+    \begin{proof}
+        Consider $X = \mathbb{R}$ with the usual metric $d(x,y) = |x-y|$. Let $A = [0,1]$ and $B = [1,2]$. Then
+    \[D(A,B) = \inf\{|a-b| : a \in [0,1], b \in [1,2]\} = 0,\]
+    since we can take $a = 1$ and $b = 1$. However, $A \neq B$. Thus, $D(A,B) = 0$ does not imply $A = B$, violating the identity of indiscernibles property of a metric. Therefore, $D$ does not define a metric on the power set of $X$.
+    \end{proof}
+	
+	\begin{problem}
+		Show that the image of an open set under a continuous function is not necessarily open.
+	\end{problem}
+    \begin{proof}
+        Consider the function $f: \mathbb{R} \to \mathbb{R}$ defined by $f(x) = x^2$. The set $U = (-1,1)$ is open in $\mathbb{R}$. However, the image of $U$ under $f$ is
+    \[f(U) = \{x^2 : x \in (-1,1)\} = [0,1),\]
+    which is not open in $\mathbb{R}$. Thus, the image of an open set under a continuous function need not be open.
+    \end{proof}
+	
+	\begin{problem}
+		Show that any nonempty set $A\subset(X,d)$ is open if and only if it is a union of open balls.
+	\end{problem}
+    \begin{proof}
+        ($\Rightarrow $) Suppose $A$ is open. For each $x \in A$, there exists $\varepsilon_x > 0$ such that the open ball $B(x, \varepsilon_x) \subset A$. Thus,
+        \[
+        A = \bigcup_{x \in A} B(x, \varepsilon_x).
+        \]
+
+        ($\Leftarrow$) Suppose $A$ is a union of open balls. Each open ball is open, and a union of open sets is open. Therefore, $A$ is open.
+        \end{proof}
+    
+    \begin{problem}
+        Show that a compact subset of a metric space is closed and bounded. Is the converse true?
+    \end{problem}
+    \begin{proof}
+        Consider the space $X = \ell^\infty$, and a subset $\{e_n\}$ where $e_n$ is the sequence with 1 in the $n$-th position and 0 elsewhere. This set is closed and bounded but not compact, as it has no convergent subsequence. Thus, the converse is not true.
+    \end{proof}
+	
+	\begin{problem}
+		If $(x_n)$ is a Cauchy sequence in a metric space $(X,d)$ and has a convergent subsequence $(x_{n_k})$ converging to $x\in X$, show that the original sequence $(x_n)$ converges to $x$.
+	\end{problem}
+    \begin{proof}
+        Let $\varepsilon > 0$. Since $(x_n)$ is Cauchy, there exists $N_1$ such that for all $m,n \ge N_1$, $d(x_n, x_m) < \frac{\varepsilon}{2}$. Since $(x_{n_k})$ converges to $x$, there exists $N_2$ such that for all $k \ge N_2$, $d(x_{n_k}, x) < \frac{\varepsilon}{2}$. Let $N = \max(N_1, n_{N_2})$. For any $n \ge N$, choose $k$ such that $n_k \ge N$. Then,
+        \[d(x_n, x) \le d(x_n, x_{n_k}) + d(x_{n_k}, x) < \frac{\varepsilon}{2} + \frac{\varepsilon}{2} = \varepsilon.\]
+        Thus, $x_n \to x$.
+    \end{proof}
+\section{Q\&A}
+\begin{proposition}
+    In a metric space, a subset is compact if and only if it is sequentially compact.
+\end{proposition}
+\begin{proof}
+    \textbf{(Compact $\implies$ Sequentially Compact)}: Let $K \subset X$ be a compact subset of a metric space $(X,d)$. Consider any sequence $(x_n)$ in $K$. We will show that there exists a subsequence of $(x_n)$ that converges to a point in $K$.
+
+    Since $K$ is compact, for each integer $m \geq 1$, we can cover $K$ with finitely many open balls of radius $\frac{1}{m}$. By the pigeonhole principle, there exists at least one ball that contains infinitely many terms of the sequence $(x_n)$. We can select a subsequence $(x_{n_k})$ that lies entirely within this ball. Repeating this process for each $m$, we obtain a nested sequence of balls with radii tending to zero. The intersection of these balls contains exactly one point, say $x \in K$. The subsequence $(x_{n_k})$ converges to $x$.
+
+    \textbf{(Sequentially Compact $\implies$ Compact)}: Let $K \subset X$ be a sequentially compact subset of a metric space $(X,d)$. We will show that every open cover of $K$ has a finite subcover.
+
+    \begin{proof}
+    The implication ``compact $\implies$ sequentially compact'' holds in any metric space (and indeed in any first-countable space). We prove the nontrivial direction: \\
+    \textbf{Sequentially compact $\implies$ compact.}
+
+    \begin{lemma}[Sequentially compact $\implies$ totally bounded]
+        If $K$ is sequentially compact, then $K$ is totally bounded.
+    \end{lemma}
+    \begin{proof}
+        Suppose $K$ is not totally bounded. Then there exists $\varepsilon > 0$ such that no finite collection of $\varepsilon$-balls covers $K$.  
+        Construct a sequence $(x_n)$ inductively: pick $x_1 \in K$; having chosen $x_1,\dots,x_n$, pick
+        \[
+        x_{n+1} \in K \setminus \bigcup_{i=1}^n B(x_i, \varepsilon).
+        \]
+        By construction, $d(x_i, x_j) \ge \varepsilon$ for all $i \neq j$. This sequence has no Cauchy subsequence, hence no convergent subsequence, contradicting sequential compactness. Therefore $K$ is totally bounded.
+    \end{proof}
+
+    \begin{lemma}[Sequentially compact $\implies$ complete]
+        If $K$ is sequentially compact, then $K$ is complete (as a metric subspace).
+    \end{lemma}
+    \begin{proof}
+        Let $(x_n)$ be a Cauchy sequence in $K$. By sequential compactness, it has a convergent subsequence $x_{n_k} \to x \in K$. A Cauchy sequence with a convergent subsequence converges to the same limit, so $x_n \to x \in K$. Hence $K$ is complete.
+    \end{proof}
+
+    \begin{lemma}[Totally bounded and complete $\implies$ compact]
+        In a metric space, if $K$ is totally bounded and complete, then $K$ is compact.
+    \end{lemma}
+    \begin{proof}
+        Let $\{U_\alpha\}_{\alpha \in A}$ be an open cover of $K$. First we show the existence of a Lebesgue number: there exists $\delta > 0$ such that every subset of $K$ with diameter less than $\delta$ is contained in some $U_\alpha$.
+
+        If not, then for each $n$ there exists $C_n \subset K$ with $\operatorname{diam}(C_n) < \frac{1}{n}$ not contained in any $U_\alpha$. Pick $x_n \in C_n$. By sequential compactness (which follows from total boundedness and completeness, but here we already have it from hypothesis), some subsequence $x_{n_k} \to x \in K$. Choose $\alpha$ with $x \in U_\alpha$, and choose $r > 0$ such that $B(x,r) \subset U_\alpha$. For large $k$, $\operatorname{diam}(C_{n_k}) < \frac{1}{n_k} < r/2$ and $d(x_{n_k}, x) < r/2$, hence $C_{n_k} \subset B(x,r) \subset U_\alpha$, contradiction. So a Lebesgue number $\delta > 0$ exists.
+
+        Now, total boundedness gives a finite $\frac{\delta}{3}$-net $\{y_1,\dots,y_m\} \subset K$. Each ball $B(y_i, \delta/3)$ has diameter $< \delta$, hence lies in some $U_{\alpha_i}$. Since the balls cover $K$, the sets $U_{\alpha_1},\dots,U_{\alpha_m}$ form a finite subcover. Hence $K$ is compact.
+    \end{proof}
+
+    By the three lemmas, if $K$ is sequentially compact, then it is totally bounded and complete, hence compact.
+\end{proof}
+
+    Therefore, every open cover of $K$ must have a finite subcover, and thus $K$ is compact.
+\end{proof}
+
+\end{document}

@@ -1,0 +1,137 @@
+% ========== 颜色定义 ==========
+% 主文本颜色（柔和的深灰色）
+\definecolor{maintext}{HTML}{2C3E50}        % 更深的蓝灰色
+% 链接颜色（柔和的深蓝色）
+\definecolor{linkblue}{HTML}{004085}        % 深蓝色
+% 定理环境颜色
+\definecolor{theoremcolor}{HTML}{2980B9}      % 深蓝色
+\definecolor{definitioncolor}{HTML}{27AE60}   % 深绿色
+\definecolor{propositioncolor}{HTML}{8E44AD}  % 深紫色
+\definecolor{lemmacolor}{HTML}{D35400}        % 深橙色
+\definecolor{corollarycolor}{HTML}{16A085}    % 深青绿色
+\definecolor{examplecolor}{HTML}{E67E22}      % 深琥珀色
+\definecolor{remarkcolor}{HTML}{7F8C8D}       % 深灰色
+\definecolor{problemcolor}{HTML}{C0392B}       % 深红色
+
+% 设置全局文本颜色
+\color{maintext}
+
+% 更新链接颜色使用深色柔和蓝色
+\hypersetup{
+    linkcolor=linkblue,
+    citecolor=linkblue,
+    urlcolor=linkblue,
+    unicode=true
+}
+
+% ========== 定理环境定义 ==========
+% 各环境独立计数，并添加颜色
+
+\newtheoremstyle{theoremstyle}
+  {3pt}   % 上方间距
+  {3pt}   % 下方间距
+  {\normalfont} % 正文字体
+  {}      % 缩进
+  {\bfseries\color{theoremcolor}} % 标题字体
+  {.}     % 标题后标点
+  {5pt plus 1pt minus 1pt} % 标题后间距
+  {}      % 标题说明
+
+\newtheoremstyle{definitionstyle}
+  {3pt}
+  {3pt}
+  {\normalfont}
+  {}
+  {\bfseries\color{definitioncolor}}
+  {.}
+  {5pt plus 1pt minus 1pt}
+  {}
+
+\newtheoremstyle{propositionstyle}
+  {3pt}
+  {3pt}
+  {\normalfont}
+  {}
+  {\bfseries\color{propositioncolor}}
+  {.}
+  {5pt plus 1pt minus 1pt}
+  {}
+
+\newtheoremstyle{lemmastyle}
+  {3pt}
+  {3pt}
+  {\normalfont}
+  {}
+  {\bfseries\color{lemmacolor}}
+  {.}
+  {5pt plus 1pt minus 1pt}
+  {}
+
+\newtheoremstyle{corollarystyle}
+  {3pt}
+  {3pt}
+  {\normalfont}
+  {}
+  {\bfseries\color{corollarycolor}}
+  {.}
+  {5pt plus 1pt minus 1pt}
+  {}
+
+\newtheoremstyle{examplestyle}
+  {3pt}
+  {3pt}
+  {\normalfont}
+  {}
+  {\bfseries\color{examplecolor}}
+  {.}
+  {5pt plus 1pt minus 1pt}
+  {}
+
+\newtheoremstyle{remarkstyle}
+  {3pt}
+  {3pt}
+  {\normalfont}
+  {}
+  {\itshape\color{remarkcolor}} % Remark通常用斜体
+  {.}
+  {5pt plus 1pt minus 1pt}
+  {}
+
+\newtheoremstyle{problemstyle}
+  {3pt}
+  {3pt}
+  {\normalfont}
+  {}
+  {\bfseries\color{problemcolor}}
+  {.}
+  {5pt plus 1pt minus 1pt}
+  {}
+
+% 应用定理样式
+\theoremstyle{theoremstyle}
+\newtheorem{theorem}{Theorem}[section]
+
+\theoremstyle{definitionstyle}
+\newtheorem{definition}{Definition}[section]
+
+\theoremstyle{propositionstyle}
+\newtheorem{proposition}{Proposition}[section]
+
+\theoremstyle{lemmastyle}
+\newtheorem{lemma}{Lemma}[section]
+
+\theoremstyle{corollarystyle}
+\newtheorem{corollary}{Corollary}[section]
+
+\theoremstyle{examplestyle}
+\newtheorem{example}{Example}[section]
+
+\theoremstyle{remarkstyle}
+\newtheorem{remark}{Remark}[section]
+
+\theoremstyle{problemstyle}
+\newtheorem{problem}{Problem}[section]
+
+% 可选：为证明环境添加样式
+\usepackage{etoolbox}
+\AtBeginEnvironment{proof}{\color{maintext}} % 确保证明文本也是主文本颜色
