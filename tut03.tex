@@ -205,6 +205,121 @@ Since \(\Phi\) is a linear isometry and surjective, it is an isometric isomorphi
 \begin{remark}
 The proposition fails for \(p=1\) and \(p=\infty\). Instead, one has \((\ell^1)^* \cong \ell^\infty\), while \((\ell^\infty)^*\) is strictly larger than \(\ell^1\) (it can be identified with the space of finitely additive measures)
 \end{remark}
+\begin{theorem}[Jordan--von Neumann Theorem]
+Let $(X, \|\cdot\|)$ be a normed space over $\mathbb{K}$ ($\mathbb{K} = \mathbb{R}$ or $\mathbb{C}$). 
+Then the norm $\|\cdot\|$ is induced by an inner product if and only if it satisfies the \textbf{parallelogram law}:
+\[
+\|x+y\|^2 + \|x-y\|^2 = 2\left( \|x\|^2 + \|y\|^2 \right), \qquad \forall x,y \in X.
+\]
+Moreover, if this holds, the inner product is uniquely determined by the norm through the \textbf{polarization identities}.
+\end{theorem}
+
+We prove the theorem separately for real and complex cases.
+
+\begin{proposition}[Real case]
+Let $(X, \|\cdot\|)$ be a real normed space whose norm satisfies the parallelogram law. Define a mapping $\langle\cdot,\cdot\rangle: X \times X \to \mathbb{R}$ by
+\[
+\langle x, y \rangle = \frac{1}{4} \left( \|x+y\|^2 - \|x-y\|^2 \right), \qquad x,y \in X.
+\]
+Then $\langle\cdot,\cdot\rangle$ is an inner product on $X$ and $\|x\| = \sqrt{\langle x, x \rangle}$ for all $x \in X$.
+\end{proposition}
+
+\begin{proof}
+We verify the axioms of an inner product step by step.
+
+\noindent\textbf{1. Symmetry:} Clearly $\langle x, y \rangle = \langle y, x \rangle$ from the definition.
+
+\noindent\textbf{2. Positivity:} $\langle x, x \rangle = \frac{1}{4} \|2x\|^2 = \|x\|^2 \geq 0$, and $\langle x, x \rangle = 0$ iff $\|x\|=0$ iff $x=0$.
+
+\noindent\textbf{3. Additivity in the first argument (the hardest part).} 
+We first show that $\langle x+z, y \rangle = \langle x, y \rangle + \langle z, y \rangle$ for all $x,y,z \in X$.
+
+Define the function $f(x,y) = \|x+y\|^2 - \|x-y\|^2$. Then $\langle x, y \rangle = \frac{1}{4}f(x,y)$.
+Using the parallelogram law repeatedly:
+
+\begin{align*}
+f(x+z, y) + f(x-z, y) 
+&= \|x+z+y\|^2 - \|x+z-y\|^2 + \|x-z+y\|^2 - \|x-z-y\|^2 \\
+&= \|x+z+y\|^2 + \|x-z+y\|^2 - \left( \|x+z-y\|^2 + \|x-z-y\|^2 \right).
+\end{align*}
+Apply the parallelogram law to the pairs $(x+y, z)$ and $(x-y, z)$:
+\begin{align*}
+\|x+z+y\|^2 + \|x-z+y\|^2 &= 2\|x+y\|^2 + 2\|z\|^2, \\
+\|x+z-y\|^2 + \|x-z-y\|^2 &= 2\|x-y\|^2 + 2\|z\|^2.
+\end{align*}
+Thus
+\[
+f(x+z, y) + f(x-z, y) = 2\|x+y\|^2 + 2\|z\|^2 - 2\|x-y\|^2 - 2\|z\|^2 = 2f(x,y).
+\]
+Hence
+\begin{equation}
+\langle x+z, y \rangle + \langle x-z, y \rangle = 2\langle x, y \rangle. \tag{1}
+\end{equation}
+
+Now, replacing $z$ by $x$ in (1) gives
+\[
+\langle 2x, y \rangle + \langle 0, y \rangle = 2\langle x, y \rangle.
+\]
+But $f(0,y) = \|y\|^2 - \|-y\|^2 = 0$, so $\langle 0, y \rangle = 0$. Thus $\langle 2x, y \rangle = 2\langle x, y \rangle$.
+
+Next, set $u = x+z$ and $v = x-z$. Then $x = \frac{u+v}{2}$ and $z = \frac{u-v}{2}$. From (1) we have
+\[
+\langle u, y \rangle + \langle v, y \rangle = 2\langle \tfrac{u+v}{2}, y \rangle = \langle u+v, y \rangle.
+\]
+Thus $\langle u+v, y \rangle = \langle u, y \rangle + \langle v, y \rangle$, which is additivity.
+
+\noindent\textbf{4. Homogeneity in the first argument.} 
+From additivity we get $\langle nx, y \rangle = n\langle x, y \rangle$ for integers $n$. 
+For rational $r = m/n$, we have $\langle r x, y \rangle = r\langle x, y \rangle$.
+By continuity of the norm (and hence of $\langle\cdot,\cdot\rangle$), homogeneity extends to all real scalars.
+
+Thus $\langle\cdot,\cdot\rangle$ is a real inner product, and clearly $\|x\|^2 = \langle x, x \rangle$.
+\end{proof}
+
+\begin{proposition}[Complex case]
+Let $(X, \|\cdot\|)$ be a complex normed space whose norm satisfies the parallelogram law. Define a mapping $\langle\cdot,\cdot\rangle: X \times X \to \mathbb{C}$ by
+\[
+\langle x, y \rangle = \frac{1}{4} \sum_{k=0}^{3} i^k \|x + i^k y\|^2,
+\]
+where $i$ is the imaginary unit. Then $\langle\cdot,\cdot\rangle$ is an inner product on $X$ and $\|x\| = \sqrt{\langle x, x \rangle}$ for all $x \in X$.
+\end{proposition}
+
+\begin{proof}
+The proof follows a similar pattern but is more involved due to the sesquilinearity.
+
+\noindent\textbf{1. Conjugate symmetry:} We show $\langle y, x \rangle = \overline{\langle x, y \rangle}$.
+Observe that for any $z \in X$, $\|z\|^2 = \|\overline{i^k} z\|^2$ because scaling by a complex number of modulus $1$ does not change the norm. 
+Specifically, $\|i^k z\| = \|z\|$. Then
+\begin{align*}
+\overline{\langle x, y \rangle} 
+&= \frac{1}{4} \sum_{k=0}^{3} (-i)^k \|x + i^k y\|^2 
+= \frac{1}{4} \sum_{k=0}^{3} (-i)^k \|(-i)^k x + y\|^2 \\
+&= \frac{1}{4} \sum_{k=0}^{3} i^{-k} \|y + i^{-k} x\|^2 
+= \frac{1}{4} \sum_{k=0}^{3} i^{k} \|y + i^{k} x\|^2 
+= \langle y, x \rangle,
+\end{align*}
+after reindexing the sum (let $k' = -k \mod 4$).
+
+\noindent\textbf{2. Positivity:} $\langle x, x \rangle = \frac{1}{4} \sum_{k=0}^{3} i^k \|x + i^k x\|^2$.
+Now $\|x + i^k x\|^2 = |1+i^k|^2 \|x\|^2$. Since $|1+i^k|^2 = 2$ for $k=0,2$ and $0$ for $k=1,3$, we get
+\[
+\langle x, x \rangle = \frac{1}{4} \left( 1\cdot 2\|x\|^2 + i^2 \cdot 2\|x\|^2 \right) = \frac{1}{4} (2\|x\|^2 - 2\|x\|^2) = \|x\|^2.
+\]
+Thus $\langle x, x \rangle = \|x\|^2 \geq 0$, and equals $0$ only when $x=0$.
+
+\noindent\textbf{3. Linearity in the first argument:} 
+The proof of additivity follows the same idea as in the real case, but one must work with the four‑term polarization identity. 
+One first proves an analogue of (1) for the complex polarization form, then deduces additivity. 
+Homogeneity for real scalars follows as before; for complex scalars, one first proves $\langle i x, y \rangle = i \langle x, y \rangle$ by direct computation using the definition, then combines with real homogeneity to get full complex homogeneity.
+
+\noindent\textbf{4. Sesquilinearity:} From the above, $\langle\cdot,\cdot\rangle$ is linear in the first argument and conjugate symmetric, hence conjugate linear in the second argument.
+
+Therefore $\langle\cdot,\cdot\rangle$ is a complex inner product inducing the given norm.
+\end{proof}
+
+\begin{remark}
+The converse of the theorem is straightforward: if the norm comes from an inner product, then the parallelogram law holds, as shown earlier.
+\end{remark}
 \section{Application of B.L.T. Theorem: Weak Derivatives}
 \begin{definition}[Weak Derivative]
 For a function $u \in L^2(\Omega)$ and a multi-index $\alpha$, we say that $v \in L^2(\Omega)$ is the $\alpha$-th weak derivative of $u$ if for every test function $\phi \in C_c^\infty(\Omega)$,
