@@ -232,6 +232,94 @@ for some $v \in L^2(\Omega)$. Then we set $D^\alpha u = v$.
 
 Thus, the B.L.T. Theorem allows us to extend the notion of derivative from smooth functions to $L^2$ functions in a weak sense.
 
+The above illustration is completed by Deepseek. However, it is not correct as it stands. The key issue is that not every $L^2$ function has an $L^2$ weak derivative. The key point is that we cannot guarantee 
+
+\subsection{The Sobolev Space $W^{1,2}(0,1)$}
+
+\begin{definition}[Sobolev space $W^{1,2}(0,1)$]
+The Sobolev space $W^{1,2}(0,1)$ is defined as
+\[
+W^{1,2}(0,1) = \left\{ f \in L^2(0,1) : \exists g \in L^2(0,1) \text{ such that } \int_0^1 f \phi' = - \int_0^1 g \phi, \ \forall \phi \in C_c^\infty(0,1) \right\}.
+\]
+The function $g$ (unique by density) is called the \textbf{weak derivative} of $f$ and denoted $f'$.
+\end{definition}
+
+\begin{proposition}[Alternative characterization]
+The space $C^1[0,1]$ is dense in $W^{1,2}(0,1)$ with respect to the norm
+\[
+\|f\|_{W^{1,2}} = \left( \|f\|_{L^2}^2 + \|f'\|_{L^2}^2 \right)^{1/2},
+\]
+where $f'$ denotes the weak derivative for $f \in W^{1,2}$ and the classical derivative for $f \in C^1$.
+\end{proposition}
+
+\subsection{Constructing the Weak Derivative Operator via B.L.T.}
+
+\begin{theorem}[Extension of the classical derivative]
+Consider the classical derivative operator $D: C^1[0,1] \to L^2(0,1)$ defined by $Df = f'$ (classical derivative). 
+Then $D$ extends uniquely to a bounded linear operator $\tilde{D}: W^{1,2}(0,1) \to L^2(0,1)$ satisfying $\|\tilde{D}\| \leq 1$, 
+and this extension coincides with the weak derivative.
+\end{theorem}
+
+\begin{proof}
+\textbf{Step 1: $D$ is bounded on $(C^1, \|\cdot\|_{W^{1,2}})$}.  
+For $f \in C^1[0,1]$,
+\[
+\|Df\|_{L^2} = \|f'\|_{L^2} \leq \left( \|f\|_{L^2}^2 + \|f'\|_{L^2}^2 \right)^{1/2} = \|f\|_{W^{1,2}}.
+\]
+Thus $D: (C^1, \|\cdot\|_{W^{1,2}}) \to L^2(0,1)$ is bounded with $\|D\| \leq 1$.
+
+\textbf{Step 2: Apply B.L.T. theorem}.  
+Since $C^1[0,1]$ is dense in $W^{1,2}(0,1)$ with respect to $\|\cdot\|_{W^{1,2}}$,
+the B.L.T. theorem guarantees a unique bounded extension $\tilde{D}: W^{1,2}(0,1) \to L^2(0,1)$ with $\|\tilde{D}\| \leq 1$.
+
+\textbf{Step 3: $\tilde{D}$ coincides with the weak derivative}.  
+Let $f \in W^{1,2}(0,1)$ and choose $f_n \in C^1[0,1]$ such that $f_n \to f$ in $W^{1,2}$. 
+Then $\tilde{D}f = \lim_{n\to\infty} Df_n = \lim_{n\to\infty} f_n'$ in $L^2$.
+For any test function $\phi \in C_c^\infty(0,1)$, we have
+\[
+\int_0^1 \tilde{D}f \cdot \phi 
+= \lim_{n\to\infty} \int_0^1 f_n' \phi 
+= -\lim_{n\to\infty} \int_0^1 f_n \phi' 
+= -\int_0^1 f \phi'.
+\]
+Thus $\tilde{D}f$ satisfies the definition of the weak derivative of $f$.
+\end{proof}
+
+\begin{remark}
+The key points:
+\begin{enumerate}
+\item We do \textbf{not} claim that every $L^2$ function has an $L^2$ weak derivative.
+\item Instead, we start with $C^1$ functions equipped with the $W^{1,2}$ norm, which is strictly stronger than the $L^2$ norm.
+\item The completion of $C^1$ under this norm is exactly $W^{1,2}$, not all of $L^2$.
+\item The extended operator $\tilde{D}$ is defined only on $W^{1,2}$, not on all of $L^2$.
+\end{enumerate}
+\end{remark}
+
+\subsection{A Concrete Counterexample}
+
+\begin{proposition}[Not every $L^2$ function has an $L^2$ weak derivative]
+The function $f(x) = |x-1/2|^{1/2}$ belongs to $L^2(0,1)$ but not to $W^{1,2}(0,1)$.
+\end{proposition}
+
+\begin{proof}
+First, compute
+\[
+\int_0^1 |f(x)|^2 dx = \int_0^1 |x-1/2| dx = \frac{1}{4} < \infty,
+\]
+so $f \in L^2(0,1)$.
+
+Suppose $f$ had a weak derivative $g \in L^2(0,1)$. Then for all $\phi \in C_c^\infty(0,1)$,
+\[
+\int_0^1 g\phi = -\int_0^1 f\phi' = -\int_0^1 |x-1/2|^{1/2} \phi'(x) dx.
+\]
+Take $\phi$ such that $\phi(x) = 1$ near $1/2$. The right-hand side is essentially
+\[
+-\int |x-1/2|^{1/2} \phi'(x) dx,
+\]
+which diverges because $|x-1/2|^{1/2}$ is not absolutely continuous and its classical derivative $\frac{1}{2}|x-1/2|^{-1/2}\operatorname{sgn}(x-1/2)$ is not in $L^2$ (its square integral diverges logarithmically at $1/2$). More rigorously, one can show that no $g \in L^2$ can satisfy the integration-by-parts formula.
+\end{proof}
+
+
 \section{Application of the B.L.T. Theorem: Fourier Transform on $L^2(\mathbb{R})$}
 
 \begin{definition}
