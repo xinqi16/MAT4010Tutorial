@@ -1,0 +1,272 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{ifthen}
+\usepackage{tcolorbox}
+\usepackage{marginnote}
+\usepackage[colorlinks=true]{hyperref}
+\usepackage{bookmark}
+\usepackage{xcolor}
+
+\newboolean{MinkowskiProof}
+\setboolean{MinkowskiProof}{true} % Set to true to include the proof of Minkowski's inequality
+
+\input{note_style.tex}
+
+% \newenvironment{oldcontent}{\begin{tcolorbox}[colback=gray!10,colframe=gray!50,title=上节已讲]}{\end{tcolorbox}}
+\newcommand{\covered}{\marginnote{\footnotesize Last time covered}}
+
+
+\begin{document}
+
+\begin{center}
+\Large\textbf{
+Functional Analysis\\
+\vspace{1em}
+Tutorial 3}
+\date{}
+\end{center}
+\vspace{2em}
+
+\tableofcontents
+
+\section{Assignments}
+\begin{problem}
+    Prove that for $\ell^p$ spaces, $(e_k)$ defined by
+    \[e_k = (0, 0, \ldots, 1, 0, \ldots) \text{ (1 in the k-th position)}\]
+    is a Schauder basis.
+\end{problem}
+\begin{proof}
+    Let $1 \le p < \infty$ and $x = (x_1, x_2, \ldots) \in \ell^p$. Define the partial sums 
+    \[s_n = \sum_{k=1}^n x_k e_k = (x_1, x_2, \ldots, x_n, 0, 0, \ldots).\]
+    Then 
+    \[\|x - s_n\|_p^p = \sum_{k=n+1}^\infty |x_k|^p \to 0 \quad \text{as } n \to \infty,\]
+    since the tail of a convergent series tends to zero. Hence $s_n \to x$ in $\ell^p$-norm. This shows that every $x \in \ell^p$ can be represented as 
+    \[x = \sum_{k=1}^\infty x_k e_k,\]
+    with convergence in $\ell^p$. The uniqueness of the coefficients is obvious: if $\sum_{k=1}^\infty \alpha_k e_k = 0$, then each $\alpha_k = 0$. Therefore $(e_k)$ is a Schauder basis for $\ell^p$.
+\end{proof}
+
+\begin{problem}
+    Let $X$ and $Y$ be linear spaces. Show that $X\cap Y$ is a linear space, while $X\cup Y$ is not necessarily a linear space.
+\end{problem}
+\begin{proof}
+    First, we show $X \cap Y$ is a linear space. Since $X$ and $Y$ are linear spaces, they both contain the zero vector, so $0 \in X \cap Y$. Let $u, v \in X \cap Y$ and $\alpha$ be a scalar. Then $u, v \in X$ and $u, v \in Y$. Since $X$ is linear, $u+v \in X$ and $\alpha u \in X$. Similarly, $u+v \in Y$ and $\alpha u \in Y$. Hence $u+v \in X \cap Y$ and $\alpha u \in X \cap Y$. Thus $X \cap Y$ is closed under addition and scalar multiplication, so it is a linear space.
+
+    Second, we show $X \cup Y$ need not be a linear space. Consider $X = \{(x,0) : x \in \mathbb{R}\}$ and $Y = \{(0,y) : y \in \mathbb{R}\}$ in $\mathbb{R}^2$. Both are linear subspaces. Their union $X \cup Y$ consists of the coordinate axes. Take $u = (1,0) \in X$ and $v = (0,1) \in Y$. Then $u+v = (1,1)$, which is not in $X \cup Y$. Thus $X \cup Y$ is not closed under addition, hence not a linear space.
+\end{proof}
+
+\begin{problem}
+    In $\ell^\infty$, let $Y$ be the set of all sequences with only finitely many non-zero terms. Show that $Y$ is a subspace of $\ell^\infty$, but $Y$ is not closed in $\ell^\infty$.
+\end{problem}
+\begin{proof}
+    Clearly $Y \subset \ell^\infty$. The zero sequence is in $Y$. If $x, y \in Y$, then each has only finitely many non-zero terms, so $x+y$ also has only finitely many non-zero terms, hence $x+y \in Y$. Similarly, for any scalar $\alpha$, $\alpha x \in Y$. Thus $Y$ is a subspace of $\ell^\infty$.
+
+    To show $Y$ is not closed, consider the sequence $(x^{(n)})$ in $Y$ defined by 
+    \[x^{(n)} = \left(1, \frac{1}{2}, \frac{1}{3}, \ldots, \frac{1}{n}, 0, 0, \ldots\right).\]
+    Each $x^{(n)}$ has only $n$ non-zero terms. In $\ell^\infty$, we have 
+    \[\|x^{(n)} - x\|_\infty \to 0 \quad \text{where } x = \left(1, \frac{1}{2}, \frac{1}{3}, \ldots, \frac{1}{k}, \ldots\right).\]
+    Indeed, $\|x^{(n)} - x\|_\infty = \sup_{k > n} 1/k = 1/(n+1) \to 0$. But $x$ has infinitely many non-zero terms, so $x \notin Y$. Thus $Y$ does not contain all its limit points, hence $Y$ is not closed.
+\end{proof}
+
+\begin{problem}
+    Prove that the existence of a Schauder basis in a normed space $X$ implies the separability of $X$.
+\end{problem}
+\begin{proof}
+    Let $(e_k)_{k=1}^\infty$ be a Schauder basis for $X$. Then every $x \in X$ has a unique representation $x = \sum_{k=1}^\infty \alpha_k e_k$ with convergence in norm. Consider the set 
+    \[D = \left\{ \sum_{k=1}^n q_k e_k : n \in \mathbb{N}, q_k \in \mathbb{Q} \text{ (or } \mathbb{Q}+i\mathbb{Q} \text{ if the field is complex)} \right\}.\]
+    $D$ is countable because it is a countable union of countable sets. We show $D$ is dense in $X$. Given $x = \sum_{k=1}^\infty \alpha_k e_k \in X$ and $\varepsilon > 0$, choose $n$ such that $\|\sum_{k=1}^\infty \alpha_k e_k - \sum_{k=1}^n \alpha_k e_k\| < \varepsilon/2$. Then for each $k = 1,\ldots,n$, choose a rational (or complex rational) $q_k$ such that $|\alpha_k - q_k| < \varepsilon/(2n M)$ where $M = \max_{1\le k\le n} \|e_k\|$. Then 
+    \[\left\| \sum_{k=1}^n \alpha_k e_k - \sum_{k=1}^n q_k e_k \right\| \le \sum_{k=1}^n |\alpha_k - q_k| \|e_k\| < n \cdot \frac{\varepsilon}{2n M} \cdot M = \varepsilon/2.\]
+    Hence $\|x - \sum_{k=1}^n q_k e_k\| < \varepsilon$. Thus $D$ is dense in $X$, so $X$ is separable.
+\end{proof}
+
+\begin{problem}
+    Let $K$ be a compact metric space and $S$ is a closed subset of $K$. Show that $S$ is compact.
+\end{problem}
+\begin{proof}
+    We prove using sequential compactness. Since $K$ is a compact metric space, it is sequentially compact: every sequence in $K$ has a convergent subsequence. Let $(x_n)$ be a sequence in $S$. Since $S \subset K$, $(x_n)$ is also a sequence in $K$. By sequential compactness of $K$, there exists a subsequence $(x_{n_k})$ converging to some point $x \in K$. But $S$ is closed, and $(x_{n_k})$ is in $S$, so its limit $x$ must belong to $S$. Thus every sequence in $S$ has a convergent subsequence with limit in $S$. Hence $S$ is sequentially compact, and since $S$ is a metric space (as a subset of a metric space), it is compact.
+
+    Alternatively, using open covers: let $\{U_i\}_{i \in I}$ be an open cover of $S$. Since $S$ is closed, $K \setminus S$ is open. Then $\{U_i\}_{i \in I} \cup \{K \setminus S\}$ is an open cover of $K$. By compactness of $K$, there exists a finite subcover of $K$. Removing $K \setminus S$ if necessary, we obtain a finite subcollection of $\{U_i\}$ that covers $S$. Hence $S$ is compact.
+\end{proof}
+
+\begin{problem}
+    If $\dim X <\infty$, show that one can choose $\alpha=1$ in F.Riesz's lemma.
+\end{problem}
+\begin{proof}
+    Recall F. Riesz's lemma: Let $X$ be a normed space, $Y \subset X$ a proper closed subspace, and $0 < \alpha < 1$. Then there exists $x \in X$ with $\|x\|=1$ such that $\mathrm{dist}(x,Y) \ge \alpha$.
+
+    When $\dim X < \infty$, we can strengthen $\alpha$ to $1$. Let $Y$ be a proper closed subspace (in finite dimensions, every subspace is closed). Consider the quotient space $X/Y$ with the quotient norm $\|x+Y\| = \inf_{y \in Y} \|x+y\|$. Since $\dim X/Y = \dim X - \dim Y$ is finite, the unit sphere in $X/Y$ is compact. Hence there exists an element $x+Y \in X/Y$ with $\|x+Y\|=1$ and the infimum is attained: there exists $y_0 \in Y$ such that $\|x+y_0\| = 1$. Let $z = x+y_0$, then $\|z\|=1$ and 
+    \[\mathrm{dist}(z, Y) = \inf_{y \in Y} \|z+y\| = \inf_{y \in Y} \|x+y_0+y\| = \inf_{y' \in Y} \|x+y'\| = \|x+Y\| = 1.\]
+    Thus we have found $z \in X$ with $\|z\|=1$ and $\mathrm{dist}(z, Y)=1$. So we can take $\alpha=1$.
+\end{proof}
+
+\section{Expansions}
+We now present one of the most fundamental representation theorems in functional analysis: the identification of the dual space of \(\ell^p\) for \(1 < p < \infty\).
+
+\begin{proposition}[Dual of \(\ell^p\)]
+Let \(1 < p < \infty\) and let \(q\) be the conjugate exponent, i.e. \(\frac{1}{p} + \frac{1}{q} = 1\).  
+Define the map \(\Phi : \ell^q \to (\ell^p)^*\) by
+\[
+\Phi(y)(x) = \sum_{n=1}^{\infty} x_n y_n, \qquad \text{for } y = (y_n) \in \ell^q,\; x = (x_n) \in \ell^p.
+\]
+Then \(\Phi\) is an isometric isomorphism. Consequently, \((\ell^p)^* \cong \ell^q\).
+\end{proposition}
+
+\begin{proof}
+We break the proof into four steps.
+
+\noindent\textbf{Step 1: \(\Phi\) is well‑defined and bounded.}  
+Let \(y \in \ell^q\) and \(x \in \ell^p\). By Hölder's inequality,
+\[
+|\Phi(y)(x)| = \left| \sum_{n=1}^{\infty} x_n y_n \right| \le \sum_{n=1}^{\infty} |x_n||y_n| \le \|x\|_p \|y\|_q.
+\]
+Thus the series converges absolutely, and \(\Phi(y)\) is a linear functional on \(\ell^p\) satisfying
+\[
+\|\Phi(y)\|_{(\ell^p)^*} = \sup_{\|x\|_p = 1} |\Phi(y)(x)| \le \|y\|_q.
+\tag{1}
+\]
+
+\noindent\textbf{Step 2: \(\Phi\) is an isometry.}  
+We show the reverse inequality \(\|\Phi(y)\| \ge \|y\|_q\).  
+If \(y = 0\) the claim is trivial. Assume \(y \neq 0\). For each \(N \in \mathbb{N}\) define a vector \(x^{(N)} \in \ell^p\) by
+\[
+x^{(N)}_n = 
+\begin{cases}
+\operatorname{sgn}(y_n) \, |y_n|^{q/p}, & \text{if } 1 \le n \le N, \\
+0, & \text{if } n > N.
+\end{cases}
+\]
+Then
+\[
+\|x^{(N)}\|_p = \left( \sum_{n=1}^{N} |y_n|^{q} \right)^{1/p}.
+\]
+Moreover,
+\[
+\Phi(y)(x^{(N)}) = \sum_{n=1}^{N} |y_n|^{q/p} \operatorname{sgn}(y_n) \, y_n 
+= \sum_{n=1}^{N} |y_n|^{q/p+1} = \sum_{n=1}^{N} |y_n|^{q} = \|x^{(N)}\|_p^p.
+\]
+Hence,
+\[
+\frac{|\Phi(y)(x^{(N)})|}{\|x^{(N)}\|_p} = \frac{\|x^{(N)}\|_p^p}{\|x^{(N)}\|_p} 
+= \|x^{(N)}\|_p^{p-1} = \left( \sum_{n=1}^{N} |y_n|^{q} \right)^{1/q}.
+\]
+Since \(\|\Phi(y)\| \ge \frac{|\Phi(y)(x^{(N)})|}{\|x^{(N)}\|_p}\) for every \(N\), letting \(N \to \infty\) gives
+\[
+\|\Phi(y)\| \ge \|y\|_q.
+\tag{2}
+\]
+Combining (1) and (2) we obtain \(\|\Phi(y)\| = \|y\|_q\); therefore \(\Phi\) is an isometry.
+
+\noindent\textbf{Step 3: \(\Phi\) is linear.}  
+Linearity of \(\Phi\) follows directly from the linearity of the sum: for \(y, z \in \ell^q\) and \(\alpha \in \mathbb{C}\),
+\[
+\Phi(\alpha y + z)(x) = \sum_{n=1}^{\infty} x_n (\alpha y_n + z_n) 
+= \alpha \sum_{n=1}^{\infty} x_n y_n + \sum_{n=1}^{\infty} x_n z_n 
+= \alpha \Phi(y)(x) + \Phi(z)(x).
+\]
+
+\noindent\textbf{Step 4: \(\Phi\) is surjective.}  
+Let \(f \in (\ell^p)^*\). Define a sequence \(y = (y_n)\) by \(y_n = f(e_n)\), where \(e_n\) is the \(n\)-th standard unit vector (i.e. \(e_n(k) = \delta_{nk}\)).  
+We claim that \(y \in \ell^q\) and that \(f = \Phi(y)\).
+
+First, for each \(N\) construct the same auxiliary vector \(x^{(N)}\) as in Step 2:
+\[
+x^{(N)}_n = 
+\begin{cases}
+\operatorname{sgn}(y_n) \, |y_n|^{q/p}, & 1 \le n \le N, \\
+0, & n > N.
+\end{cases}
+\]
+Then, as before, \(\|x^{(N)}\|_p = \left( \sum_{n=1}^{N} |y_n|^{q} \right)^{1/p}\) and
+\[
+f(x^{(N)}) = \sum_{n=1}^{N} x^{(N)}_n \, y_n = \sum_{n=1}^{N} |y_n|^{q}.
+\]
+Since \(|f(x^{(N)})| \le \|f\| \|x^{(N)}\|_p\), we have
+\[
+\sum_{n=1}^{N} |y_n|^{q} \le \|f\| \left( \sum_{n=1}^{N} |y_n|^{q} \right)^{1/p},
+\]
+which implies
+\[
+\left( \sum_{n=1}^{N} |y_n|^{q} \right)^{1/q} \le \|f\|.
+\]
+Letting \(N \to \infty\) gives \(\|y\|_q \le \|f\|\); hence \(y \in \ell^q\).
+
+Finally, for any \(x \in \ell^p\) write \(x = \sum_{n=1}^{\infty} x_n e_n\) (convergence in \(\ell^p\)).  
+By the continuity and linearity of \(f\),
+\[
+f(x) = \sum_{n=1}^{\infty} x_n f(e_n) = \sum_{n=1}^{\infty} x_n y_n = \Phi(y)(x).
+\]
+Thus \(f = \Phi(y)\), and \(\Phi\) is onto.
+
+Since \(\Phi\) is a linear isometry and surjective, it is an isometric isomorphism. Therefore \((\ell^p)^* \cong \ell^q\).
+\end{proof}
+
+\begin{remark}
+The proposition fails for \(p=1\) and \(p=\infty\). Instead, one has \((\ell^1)^* \cong \ell^\infty\), while \((\ell^\infty)^*\) is strictly larger than \(\ell^1\) (it can be identified with the space of finitely additive measures)
+\end{remark}
+\section{Application of B.L.T. Theorem: Weak Derivatives}
+\begin{definition}[Weak Derivative]
+For a function $u \in L^2(\Omega)$ and a multi-index $\alpha$, we say that $v \in L^2(\Omega)$ is the $\alpha$-th weak derivative of $u$ if for every test function $\phi \in C_c^\infty(\Omega)$,
+\[
+\int_\Omega u(x) D^\alpha \phi(x) \, dx = (-1)^{|\alpha|} \int_\Omega v(x) \phi(x) \, dx.
+\]
+We denote $v = D^\alpha u$.
+\end{definition}
+
+Note that for $u \in C_c^\infty(\Omega)$, the weak derivative coincides with the classical derivative. Now, for each fixed $\phi \in C_c^\infty(\Omega)$, consider the linear functional $T_\phi: C_c^\infty(\Omega) \to \mathbb{R}$ defined by
+\[
+T_\phi(u) = \int_\Omega u(x) D^\alpha \phi(x) \, dx.
+\]
+This functional is continuous with respect to the $L^2$ norm because by the Cauchy-Schwarz inequality,
+\[
+|T_\phi(u)| \leq \|D^\alpha \phi\|_{L^2} \|u\|_{L^2}.
+\]
+Thus, $T_\phi$ is a bounded linear functional on the dense subspace $C_c^\infty(\Omega)$ of $L^2(\Omega)$. By the B.L.T. Theorem, $T_\phi$ can be uniquely extended to a bounded linear functional on $L^2(\Omega)$.
+
+Now, if we want to define the weak derivative $D^\alpha u$ for $u \in L^2(\Omega)$, we note that the map $\phi \mapsto T_\phi(u)$ is a linear functional on $C_c^\infty(\Omega)$. However, it is not immediately obvious that this functional is given by integration against an $L^2$ function. But if it is, then that function is the weak derivative. The Riesz representation theorem for Hilbert spaces tells us that every bounded linear functional on $L^2(\Omega)$ is represented by an $L^2$ function. Therefore, the extension of $T_\phi$ to $L^2(\Omega)$ is given by
+\[
+T_\phi(u) = \int_\Omega v(x) \phi(x) \, dx
+\]
+for some $v \in L^2(\Omega)$. Then we set $D^\alpha u = v$.
+
+Thus, the B.L.T. Theorem allows us to extend the notion of derivative from smooth functions to $L^2$ functions in a weak sense.
+
+\section{Application of the B.L.T. Theorem: Fourier Transform on $L^2(\mathbb{R})$}
+
+\begin{definition}
+The Schwartz space $\mathcal{S}(\mathbb{R})$ is the space of all infinitely differentiable functions $f: \mathbb{R} \to \mathbb{C}$ such that for all nonnegative integers $n, m$,
+\[
+\sup_{x \in \mathbb{R}} |x^n f^{(m)}(x)| < \infty.
+\]
+\end{definition}
+
+\begin{definition}
+For $f \in \mathcal{S}(\mathbb{R})$, the Fourier transform $\mathcal{F}(f)$ is defined by
+\[
+\mathcal{F}(f)(\xi) = \hat{f}(\xi) = \int_{-\infty}^{\infty} f(x) e^{-2\pi i x\xi} \, dx, \quad \xi \in \mathbb{R}.
+\]
+\end{definition}
+
+\begin{proposition}[Plancherel's Theorem on $\mathcal{S}(\mathbb{R})$]
+For $f \in \mathcal{S}(\mathbb{R})$, we have
+\[
+\|\hat{f}\|_{L^2} = \|f\|_{L^2}.
+\]
+Moreover, the Fourier transform $\mathcal{F}: \mathcal{S}(\mathbb{R}) \to \mathcal{S}(\mathbb{R})$ is a bijection.
+\end{proposition}
+
+Now note that $\mathcal{S}(\mathbb{R})$ is dense in $L^2(\mathbb{R})$. The Fourier transform $\mathcal{F}$ on $\mathcal{S}(\mathbb{R})$ is a linear operator and, by Plancherel's theorem, it is an isometry (hence bounded) with respect to the $L^2$ norm.
+
+\begin{theorem}[B.L.T. Theorem]
+Let $X$ and $Y$ be normed linear spaces, and let $X_0$ be a dense subspace of $X$. If $T_0: X_0 \to Y$ is a bounded linear operator, then there exists a unique bounded linear operator $T: X \to Y$ extending $T_0$, and $\|T\| = \|T_0\|$.
+\end{theorem}
+
+Applying the B.L.T. Theorem with $X = Y = L^2(\mathbb{R})$, $X_0 = \mathcal{S}(\mathbb{R})$, and $T_0 = \mathcal{F}$, we obtain a unique bounded linear operator (which we still denote by $\mathcal{F}$) from $L^2(\mathbb{R})$ to $L^2(\mathbb{R})$ such that:
+\begin{itemize}
+    \item $\mathcal{F}(f) = \hat{f}$ for all $f \in \mathcal{S}(\mathbb{R})$.
+    \item $\|\mathcal{F}(f)\|_{L^2} = \|f\|_{L^2}$ for all $f \in L^2(\mathbb{R})$ (by continuity and density).
+\end{itemize}
+
+This extension is called the Fourier transform on $L^2(\mathbb{R})$. Moreover, since the Fourier transform on $\mathcal{S}(\mathbb{R})$ is invertible and the inverse is also an isometry, we can similarly extend the inverse Fourier transform to $L^2(\mathbb{R})$, and it will be the inverse of the extended Fourier transform. Thus, the Fourier transform on $L^2(\mathbb{R})$ is a unitary operator.
+\end{document}
