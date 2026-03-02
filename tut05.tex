@@ -1,0 +1,285 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{ifthen}
+\usepackage{tcolorbox}
+\usepackage{marginnote}
+\usepackage[colorlinks=true]{hyperref}
+\usepackage{bookmark}
+\usepackage{xcolor}
+
+\input{note_style.tex}
+
+% If the problem environment is not defined in note_style.tex, it can be defined here:
+\providecommand{\newtheorem}[2]{}
+
+\newcommand{\covered}{\marginnote{\footnotesize Last time covered}}
+
+\begin{document}
+
+\begin{center}
+\Large\textbf{
+Functional Analysis\\
+\vspace{1em}
+Tutorial 5: Hilbert Spaces and Riesz Representation
+}
+\date{}
+\end{center}
+\vspace{2em}
+
+\tableofcontents
+
+\section{Orthogonal Basis and Best Approximation}
+
+\begin{problem}[Fourier Projection on $L^2$]
+    Let $X = L^2[-1, 1]$ equipped with the standard inner product $\langle f, g \rangle = \int_{-1}^1 f(x) \overline{g(x)} \, dx$. Consider the function $f(x) = \operatorname{sgn}(x)$, where
+    \[
+    \operatorname{sgn}(x) = 
+    \begin{cases} 
+      -1 & \text{if } x \in [-1, 0) \\
+       1 & \text{if } x \in (0, 1] 
+    \end{cases}
+    \]
+    Find the best approximation of $f$ in the subspace $Y = \operatorname{span}\{e_0, e_1, e_2\}$, where $e_0, e_1, e_2$ are the first three normalized Legendre polynomials:
+    \[ e_0(x) = \frac{1}{\sqrt{2}}, \quad e_1(x) = \sqrt{\frac{3}{2}} x, \quad e_2(x) = \sqrt{\frac{5}{2}} \frac{3x^2 - 1}{2}. \]
+\end{problem}
+
+\begin{proof}[Solution]
+    By the Projection Theorem, the best approximation of $f$ in the closed subspace $Y$ is given by its orthogonal projection $P_Y f$. Since $\{e_0, e_1, e_2\}$ forms an orthonormal basis for $Y$, we can compute this projection using the Fourier coefficients:
+    \[ P_Y f = \sum_{k=0}^2 \langle f, e_k \rangle e_k. \]
+    
+    We calculate the inner products $c_k = \langle f, e_k \rangle$:
+    
+    \textbf{1. For $k=0$:}
+    \[ c_0 = \int_{-1}^1 \operatorname{sgn}(x) \frac{1}{\sqrt{2}} \, dx = 0, \]
+    because $\operatorname{sgn}(x)$ is an odd function and $e_0(x)$ is an even function.
+    
+    \textbf{2. For $k=1$:}
+    \begin{align*}
+        c_1 &= \int_{-1}^1 \operatorname{sgn}(x) \sqrt{\frac{3}{2}} x \, dx \\
+        &= \sqrt{\frac{3}{2}} \left( \int_{-1}^0 (-x) \, dx + \int_0^1 x \, dx \right) \\
+        &= \sqrt{\frac{3}{2}} \left( \frac{1}{2} + \frac{1}{2} \right) = \sqrt{\frac{3}{2}}.
+    \end{align*}
+    
+    \textbf{3. For $k=2$:}
+    \[ c_2 = \int_{-1}^1 \operatorname{sgn}(x) \sqrt{\frac{5}{2}} \frac{3x^2 - 1}{2} \, dx = 0, \]
+    again because the integrand is the product of an odd function and an even function, which is odd over a symmetric interval.
+    
+    Therefore, the best approximation is:
+    \[ P_Y f = c_0 e_0(x) + c_1 e_1(x) + c_2 e_2(x) = \sqrt{\frac{3}{2}} \left( \sqrt{\frac{3}{2}} x \right) = \frac{3}{2}x. \]
+\end{proof}
+
+\section{Orthogonal Complements and Closed Subspaces}
+
+\begin{problem}[Closedness of Orthogonal Complements]
+    Let $X$ be a Hilbert space and let $M$ be a non-empty subset of $X$.
+    \begin{enumerate}
+        \item[(a)] Prove that the orthogonal complement $M^\perp$ is always a closed subspace of $X$, regardless of whether $M$ is closed or even a subspace.
+        \item[(b)] Let $X = \ell^2(\mathbb{C})$, and let $M = c_{00}$ be the subspace of all sequences with only finitely many non-zero terms.
+        \begin{enumerate}
+            \item[(i)] Find $M^\perp$.
+            \item[(ii)] Find $M^{\perp\perp} = (M^\perp)^\perp$.
+            \item[(iii)] Is $M = M^{\perp\perp}$? If not, what is the fundamental relationship between $M$ and $M^{\perp\perp}$?
+        \end{enumerate}
+    \end{enumerate}
+\end{problem}
+
+\begin{proof}[Solution]
+    \textbf{Part (a): Subspace and Closedness} \\
+    First, we show $M^\perp$ is a subspace. Let $x, y \in M^\perp$ and $\alpha, \beta \in \mathbb{C}$. For any $z \in M$, we have:
+    \[ \langle \alpha x + \beta y, z \rangle = \alpha \langle x, z \rangle + \beta \langle y, z \rangle = \alpha(0) + \beta(0) = 0. \]
+    Thus, $\alpha x + \beta y \in M^\perp$, meaning $M^\perp$ is a vector subspace.
+
+    Next, we show $M^\perp$ is closed. Let $(x_n)$ be a sequence in $M^\perp$ such that $x_n \to x \in X$. For any $z \in M$, we use the continuity of the inner product to evaluate $\langle x, z \rangle$:
+    \[ \langle x, z \rangle = \left\langle \lim_{n \to \infty} x_n, z \right\rangle = \lim_{n \to \infty} \langle x_n, z \rangle = \lim_{n \to \infty} 0 = 0. \]
+    Therefore, $x \in M^\perp$. Since $M^\perp$ contains all its limit points, it is inherently a closed subspace.
+
+    \vspace{1em}
+    \textbf{Part (b): A Counter-intuitive Example in Infinite Dimensions} \\
+    \textbf{(i)} Let $y = (y_1, y_2, \ldots) \in M^\perp$. Then $\langle y, x \rangle = 0$ for all $x \in M$. \\
+    For any fixed $k \in \mathbb{N}$, let $e_k = (0, \ldots, 0, 1, 0, \ldots) \in M$ (where $1$ is at the $k$-th position). 
+    Then the inner product gives:
+    \[ \langle y, e_k \rangle = y_k = 0. \]
+    Since this holds for all $k \in \mathbb{N}$, $y$ must be the zero sequence. Thus, $M^\perp = \{0\}$.
+
+    \vspace{0.5em}
+    \textbf{(ii)} By definition, $M^{\perp\perp} = (M^\perp)^\perp = \{0\}^\perp$. \\
+    Since every vector in $\ell^2$ is orthogonal to the zero vector, we conclude that $M^{\perp\perp} = \ell^2$.
+
+    \vspace{0.5em}
+    \textbf{(iii)} Clearly, $M \neq M^{\perp\perp}$ because $c_{00}$ is a proper subset of $\ell^2$ (e.g., the sequence $(1, \frac{1}{2}, \frac{1}{3}, \ldots) \in \ell^2$ but is not in $c_{00}$). 
+    
+    \noindent \textbf{Takeaway:} In finite-dimensional linear algebra, we always have $V = V^{\perp\perp}$. However, in infinite-dimensional Hilbert spaces, $M = M^{\perp\perp}$ holds \textbf{if and only if} $M$ is a closed subspace. Here, $M$ is not closed. The general relationship is that $M^{\perp\perp} = \overline{M}$ (the closure of $M$). Since $c_{00}$ is dense in $\ell^2$, its closure is the entire space $\ell^2$, which perfectly matches our computation $M^{\perp\perp} = \ell^2$.
+\end{proof}
+
+\section{The Riesz Representation Theorem}
+
+\begin{problem}[Linear Functionals on $\ell^2$]
+    Let $X = \ell^2(\mathbb{R})$ and define a mapping $F: \ell^2 \to \mathbb{R}$ by
+    \[ F(x) = \sum_{n=1}^\infty \frac{x_n}{n}, \quad \text{where } x = (x_1, x_2, \ldots) \in \ell^2. \]
+    Prove that $F \in (\ell^2)'$ (i.e., $F$ is a bounded linear functional). Find the unique vector $y \in \ell^2$ that represents $F$ according to the Riesz Representation Theorem, and compute $\|F\|_{(\ell^2)'}$.
+\end{problem}
+
+\begin{proof}[Solution]
+    \textbf{1. Linearity and Boundedness:} \\
+    The linearity of $F$ follows directly from the properties of convergent series. To show boundedness, we apply the Cauchy-Schwarz inequality for series. Let $y = (1, \frac{1}{2}, \frac{1}{3}, \ldots)$. Then:
+    \[ |F(x)| = \left| \sum_{n=1}^\infty x_n \frac{1}{n} \right| \leq \left( \sum_{n=1}^\infty |x_n|^2 \right)^{1/2} \left( \sum_{n=1}^\infty \frac{1}{n^2} \right)^{1/2}. \]
+    Since $\sum_{n=1}^\infty \frac{1}{n^2} = \frac{\pi^2}{6} < \infty$, the sequence $y \in \ell^2$. Thus,
+    \[ |F(x)| \leq \frac{\pi}{\sqrt{6}} \|x\|_{\ell^2}. \]
+    This proves that $F$ is bounded, and therefore $F \in (\ell^2)'$.
+    
+    \textbf{2. The Representing Vector:} \\
+    By the Riesz Representation Theorem, there exists a unique $y \in \ell^2$ such that $F(x) = \langle x, y \rangle_{\ell^2}$ for all $x \in \ell^2$. From our definition of $F$, we have:
+    \[ F(x) = \sum_{n=1}^\infty x_n \frac{1}{n} = \langle x, y \rangle_{\ell^2}. \]
+    Matching the terms of the inner product in $\ell^2$, the unique representing vector is precisely:
+    \[ y = \left( 1, \frac{1}{2}, \frac{1}{3}, \ldots, \frac{1}{n}, \ldots \right). \]
+    
+    \textbf{3. Norm of the Functional:} \\
+    The Riesz Isometry guarantees that the norm of the functional equals the norm of its representing vector. Hence:
+    \[ \|F\|_{(\ell^2)'} = \|y\|_{\ell^2} = \sqrt{\sum_{n=1}^\infty \frac{1}{n^2}} = \frac{\pi}{\sqrt{6}}. \]
+\end{proof}
+
+\section{Sesquilinear Forms and Operators}
+
+\begin{problem}[Integral Operators from Sesquilinear Forms]
+    Let $X = L^2[0, 1]$ and let $K(s, t) \in L^2([0,1] \times [0,1])$. Define the mapping $a: X \times X \to \mathbb{C}$ by
+    \[ a(f, g) = \int_0^1 \int_0^1 K(s, t) f(t) \overline{g(s)} \, dt \, ds. \]
+    Show that $a(\cdot, \cdot)$ is a bounded sesquilinear form. Find the explicit formula for the bounded linear operator $A \in \mathcal{L}(X, X)$ such that $a(f, g) = \langle Af, g \rangle_X$.
+\end{problem}
+
+\begin{proof}[Solution]
+    \textbf{1. Boundedness of the Form:} \\
+    The linearity in $f$ and conjugate-linearity in $g$ follow from the properties of integration. To show boundedness, we apply the Cauchy-Schwarz inequality for double integrals:
+    \begin{align*}
+        |a(f, g)| &\leq \int_0^1 \int_0^1 |K(s, t)| |f(t)| |\overline{g(s)}| \, dt \, ds \\
+        &\leq \left( \int_0^1 \int_0^1 |K(s, t)|^2 \, dt \, ds \right)^{1/2} \left( \int_0^1 \int_0^1 |f(t)|^2 |g(s)|^2 \, dt \, ds \right)^{1/2} \\
+        &= \|K\|_{L^2([0,1]^2)} \left( \int_0^1 |f(t)|^2 \, dt \right)^{1/2} \left( \int_0^1 |g(s)|^2 \, ds \right)^{1/2} \\
+        &= \|K\|_{L^2} \|f\|_{L^2} \|g\|_{L^2}.
+    \end{align*}
+    Since $K \in L^2$, this proves $a(\cdot, \cdot)$ is a bounded sesquilinear form with $\|a\| \leq \|K\|_{L^2}$.
+    
+    \textbf{2. The Corresponding Operator $A$:} \\
+    By Fubini's theorem, we can rearrange the order of integration:
+    \begin{align*}
+        a(f, g) &= \int_0^1 \left( \int_0^1 K(s, t) f(t) \, dt \right) \overline{g(s)} \, ds \\
+        &= \int_0^1 (Af)(s) \overline{g(s)} \, ds \\
+        &= \langle Af, g \rangle_X.
+    \end{align*}
+    This implies that the bounded linear operator $A$ associated with this form is the integral operator (Hilbert-Schmidt operator) defined by:
+    \[ (Af)(s) = \int_0^1 K(s, t) f(t) \, dt. \]
+\end{proof}
+
+\section{Hilbert Adjoint Operator}
+
+\begin{problem}[The Right Shift Operator]
+    Consider the right shift operator $S_R: \ell^2 \to \ell^2$ defined by:
+    \[ S_R(x_1, x_2, x_3, \ldots) = (0, x_1, x_2, \ldots). \]
+    \begin{enumerate}
+        \item[(a)] Find the Hilbert adjoint operator $S_R^*$.
+        \item[(b)] Determine whether $S_R$ is self-adjoint, normal, or an isometry.
+    \end{enumerate}
+\end{problem}
+
+\begin{proof}[Solution]
+    \textbf{Part (a): Finding $S_R^*$} \\
+    By definition, the adjoint operator $S_R^*$ must satisfy $\langle S_R x, y \rangle = \langle x, S_R^* y \rangle$ for all $x, y \in \ell^2$. We compute the inner product:
+    \begin{align*}
+        \langle S_R x, y \rangle &= \langle (0, x_1, x_2, \ldots), (y_1, y_2, y_3, \ldots) \rangle \\
+        &= 0 \cdot \overline{y_1} + x_1 \overline{y_2} + x_2 \overline{y_3} + \cdots \\
+        &= \sum_{n=1}^\infty x_n \overline{y_{n+1}} \\
+        &= \langle (x_1, x_2, \ldots), (y_2, y_3, \ldots) \rangle.
+    \end{align*}
+    Thus, $S_R^*(y_1, y_2, y_3, \ldots) = (y_2, y_3, y_4, \ldots)$. This operator is known as the left shift operator, commonly denoted by $S_L$.
+    
+    \vspace{1em}
+    \textbf{Part (b): Classifying $S_R$} \\
+    \begin{itemize}
+        \item \textbf{Self-adjoint?} 
+        Since $S_R^* = S_L \neq S_R$ (e.g., $S_R(1,0,0,\ldots) = (0,1,0,\ldots)$ while $S_R^*(1,0,0,\ldots) = (0,0,0,\ldots)$), the operator is \textbf{not self-adjoint}.
+        
+        \item \textbf{Normal?}
+        We check if $S_R S_R^* = S_R^* S_R$.
+        \begin{align*}
+            S_R^* S_R (x_1, x_2, \ldots) &= S_L (0, x_1, x_2, \ldots) = (x_1, x_2, \ldots) \implies S_R^* S_R = I. \\
+            S_R S_R^* (x_1, x_2, \ldots) &= S_R (x_2, x_3, \ldots) = (0, x_2, x_3, \ldots).
+        \end{align*}
+        Since $S_R S_R^* \neq I$, the operators do not commute. Therefore, $S_R$ is \textbf{not normal}.
+        
+        \item \textbf{Isometry?}
+        An operator is an isometry if $\|S_R x\| = \|x\|$ for all $x$. Since $S_R^* S_R = I$, we have:
+        \[ \|S_R x\|^2 = \langle S_R x, S_R x \rangle = \langle S_R^* S_R x, x \rangle = \langle Ix, x \rangle = \|x\|^2. \]
+        Thus, $S_R$ \textbf{is an isometry}. (However, it is not unitary because it is not surjective).
+    \end{itemize}
+\end{proof}
+
+\section{Why Do We Need Sobolev Spaces? A Motivating Example}
+
+\begin{remark}
+    In classical calculus, we often search for solutions in spaces of continuously differentiable functions, like $C^1$. However, in functional analysis and the Galerkin finite element method, we project solutions onto complete Hilbert spaces. The following problem demonstrates exactly why incomplete spaces like $C^1$ cause the Riesz Representation Theorem (and the Projection Theorem) to fail, forcing us to complete the space into a Sobolev space $H^1$.
+\end{remark}
+
+\begin{problem}[Failure of Riesz Representation in an Incomplete Space]
+    Consider the vector space of continuously differentiable functions that vanish at the boundary:
+    \[ V = \{ v \in C^1[-1, 1] \mid v(-1) = v(1) = 0 \}. \]
+    We equip $V$ with the "energy" inner product:
+    \[ \langle u, v \rangle_V = \int_{-1}^1 u'(x) v'(x) \, dx, \quad \text{and norm } \|v\|_V = \left( \int_{-1}^1 |v'(x)|^2 \, dx \right)^{1/2}. \]
+    Define a linear functional $F: V \to \mathbb{R}$ representing a point load (Dirac delta) at the origin:
+    \[ F(v) = v(0). \]
+    \begin{enumerate}
+        \item[(a)] Prove that $F$ is a bounded linear functional on $V$.
+        \item[(b)] Prove that there does \textbf{not} exist any function $u \in V$ such that $\langle u, v \rangle_V = F(v)$ for all $v \in V$. (Hence, the Riesz Representation Theorem fails).
+        \item[(c)] Find the exact function $u(x)$ that satisfies this equation. Why is it not in $V$, and how does completing the space to the Sobolev space $H_0^1(-1, 1)$ resolve this crisis?
+    \end{enumerate}
+\end{problem}
+
+\begin{proof}[Solution]
+    \textbf{Part (a): Boundedness of the Functional} \\
+    For any $v \in V$, we can express $v(0)$ using the Fundamental Theorem of Calculus and the boundary condition $v(-1) = 0$:
+    \[ v(0) = \int_{-1}^0 v'(x) \, dx. \]
+    Applying the Cauchy-Schwarz inequality to the integral on $[-1, 0]$:
+    \begin{align*}
+        |F(v)| = |v(0)| &\leq \int_{-1}^0 1 \cdot |v'(x)| \, dx \\
+        &\leq \left( \int_{-1}^0 1^2 \, dx \right)^{1/2} \left( \int_{-1}^0 |v'(x)|^2 \, dx \right)^{1/2} \\
+        &\leq 1 \cdot \left( \int_{-1}^1 |v'(x)|^2 \, dx \right)^{1/2} = \|v\|_V.
+    \end{align*}
+    Since $|F(v)| \leq \|v\|_V$, $F$ is a bounded linear functional with $\|F\|_{V'} \leq 1$.
+
+    \vspace{1em}
+    \textbf{Part (b): The Failure of Riesz Representation} \\
+    Suppose, for the sake of contradiction, that there exists a function $u \in V = C^1[-1, 1]$ such that:
+    \[ \int_{-1}^1 u'(x) v'(x) \, dx = v(0), \quad \forall v \in V. \]
+    Consider any test function $v \in V$ whose support is strictly contained in $(0, 1)$ (meaning $v(x) = 0$ for $x \leq 0$). For such a $v$, $v(0) = 0$, so the equation reduces to:
+    \[ \int_0^1 u'(x) v'(x) \, dx = 0. \]
+    By integration by parts (or the fundamental lemma of calculus of variations), this implies $u''(x) = 0$ on $(0, 1)$. Thus, $u(x)$ must be a linear function on $(0, 1)$. Since $u(1) = 0$, we have $u(x) = a(x - 1)$ for $x \in (0, 1)$.
+    
+    By a symmetric argument using test functions supported in $(-1, 0)$, $u(x)$ must be linear on $(-1, 0)$. Since $u(-1) = 0$, $u(x) = c(x + 1)$ for $x \in (-1, 0)$.
+    
+    Now, because $u \in C^1[-1, 1]$, both $u(x)$ and $u'(x)$ must be continuous at $x = 0$:
+    \begin{itemize}
+        \item Continuity of $u$: $\lim_{x \to 0^+} a(x-1) = \lim_{x \to 0^-} c(x+1) \implies -a = c$.
+        \item Continuity of $u'$: $\lim_{x \to 0^+} a = \lim_{x \to 0^-} c \implies a = c$.
+    \end{itemize}
+    The only solution to $-a = a$ is $a = c = 0$. This means $u(x) = 0$ everywhere. 
+    However, if $u(x) = 0$, then $\langle u, v \rangle_V = 0 \neq v(0)$ for general $v \in V$, which is a contradiction! Thus, no such $u \in V$ exists.
+
+    \vspace{1em}
+    \textbf{Part (c): The Resolution via Sobolev Spaces} \\
+    Let us guess the true shape of the representer. From Part (b), we know $u(x)$ is made of straight lines and has $-a = c$. If we drop the requirement that $u \in C^1$ and allow a "kink" at $x=0$, we can choose $c = 1/2$ and $a = -1/2$. This gives:
+    \[ u(x) = \frac{1}{2}(1 - |x|). \]
+    Let's check if this $u(x)$ works. Its weak derivative is $u'(x) = 1/2$ for $x<0$ and $-1/2$ for $x>0$.
+    \begin{align*}
+        \int_{-1}^1 u'(x) v'(x) \, dx &= \int_{-1}^0 \frac{1}{2} v'(x) \, dx + \int_0^1 \left(-\frac{1}{2}\right) v'(x) \, dx \\
+        &= \frac{1}{2}[v(0) - v(-1)] - \frac{1}{2}[v(1) - v(0)] \\
+        &= \frac{1}{2}v(0) + \frac{1}{2}v(0) = v(0).
+    \end{align*}
+    It works perfectly! The exact minimizer (or representer) is $u(x) = \frac{1}{2}(1 - |x|)$.
+    
+    \noindent \textbf{Conclusion:} 
+    The function $u(x)$ has a discontinuous derivative at $x=0$, so it does not belong to the classical space $C^1[-1, 1]$. In the $C^1$ space, the Riesz Representation Theorem and the Projection Theorem fail because the space has a "hole" exactly where our solution lives. 
+    
+    When we complete the space $V$ with respect to the energy norm, we get the Sobolev space $H_0^1(-1, 1)$. In $H_0^1$, functions are only required to have square-integrable weak derivatives. Our solution $u(x) \in H_0^1(-1, 1)$, the "hole" is filled, the space is complete, and the Galerkin projection is finally mathematically justified!
+\end{proof}
+
+\end{document}
