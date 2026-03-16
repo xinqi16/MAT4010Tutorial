@@ -1,0 +1,6 @@
+\contentsline {section}{\numberline {1}Orthogonal Basis and Best Approximation}{1}{section.1}%
+\contentsline {section}{\numberline {2}Orthogonal Complements and Closed Subspaces}{2}{section.2}%
+\contentsline {section}{\numberline {3}The Riesz Representation Theorem}{3}{section.3}%
+\contentsline {section}{\numberline {4}Sesquilinear Forms and Operators}{4}{section.4}%
+\contentsline {section}{\numberline {5}Hilbert Adjoint Operator}{5}{section.5}%
+\contentsline {section}{\numberline {6}Why Do We Need Sobolev Spaces? A Motivating Example}{6}{section.6}%

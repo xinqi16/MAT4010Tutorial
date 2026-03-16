@@ -1,0 +1,203 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{ifthen}
+\usepackage{tcolorbox}
+\usepackage{marginnote}
+\usepackage[colorlinks=true]{hyperref}
+\usepackage{bookmark}
+\usepackage{xcolor}
+
+\input{note_style.tex}
+
+% If the problem environment is not defined in note_style.tex, it can be defined here:
+\providecommand{\newtheorem}[2]{}
+
+\newcommand{\covered}{\marginnote{\footnotesize Last time covered}}
+
+\begin{document}
+
+\begin{center}
+\Large\textbf{
+Functional Analysis\\
+\vspace{1em}
+Tutorial 7: Assignments and Review
+}
+\date{}
+\end{center}
+\vspace{2em}
+\begin{problem}
+		A normed vector space $X$ is called uniformly convex if: for every $\epsilon > 0$ there exists $\delta = \delta(\epsilon) > 0$ such that 
+		\[ \|x\| = \|y\| = 1 \quad \text{and} \quad \|x - y\| > \epsilon \]
+		implies that 
+		\[ \left\|\frac{x + y}{2}\right\| < 1 - \delta(\epsilon). \]
+		Show that an inner product space $X$ is uniformly convex. 
+		
+		\noindent \textbf{Hint.} Use the parallelogram law.
+	\end{problem}
+    \begin{proof}[Solution]
+        Let $X$ be an inner product space. For any $x, y \in X$ with $\|x\| = \|y\| = 1$ and $\|x - y\| > \epsilon$, we apply the parallelogram law:
+        \[ \|x + y\|^2 + \|x - y\|^2 = 2(\|x\|^2 + \|y\|^2) = 2(1 + 1) = 4. \]
+        Rearranging this gives:
+        \[ \|x + y\|^2 = 4 - \|x - y\|^2 < 4 - \epsilon^2. \]
+        Dividing by 4, we obtain:
+        \[ \left\|\frac{x + y}{2}\right\|^2 < 1 - \frac{\epsilon^2}{4}. \]
+        Taking the square root yields:
+        \[ \left\|\frac{x + y}{2}\right\| < \sqrt{1 - \frac{\epsilon^2}{4}}. \]
+        Let $\delta(\epsilon) = 1 - \sqrt{1 - \frac{\epsilon^2}{4}}$. Since $\epsilon > 0$, we have $\delta(\epsilon) > 0$, and thus $\left\|\frac{x + y}{2}\right\| < 1 - \delta(\epsilon)$. This proves $X$ is uniformly convex.
+    \end{proof}
+
+	\begin{problem}
+		Let $(e_{n})$ and $(f_{n})$ be two orthonormal sequences in a Hilbert space $X$ such that 
+		\[ \sum_{n=1}^{\infty} \|e_{n} - f_{n}\| < 1. \]
+		Show that $(e_{n})$ is maximal if and only if $(f_{n})$ is maximal.
+	\end{problem}
+    \begin{proof}[Solution]
+        Assume $(e_n)$ is maximal. We want to show $(f_n)$ is also maximal. Suppose for the sake of contradiction that $(f_n)$ is not maximal. Then there exists a non-zero vector $x \in X$ such that $\langle x, f_n \rangle = 0$ for all $n$.
+        Since $(e_n)$ is maximal, Parseval's identity holds for $x$:
+        \[ \|x\|^2 = \sum_{n=1}^\infty |\langle x, e_n \rangle|^2. \]
+        Since $\langle x, f_n \rangle = 0$, we can write $\langle x, e_n \rangle = \langle x, e_n \rangle - \langle x, f_n \rangle = \langle x, e_n - f_n \rangle$.
+        By the Cauchy-Schwarz inequality:
+        \[ |\langle x, e_n \rangle| = |\langle x, e_n - f_n \rangle| \le \|x\| \|e_n - f_n\|. \]
+        Squaring both sides and summing over $n$:
+        \[ \|x\|^2 = \sum_{n=1}^\infty |\langle x, e_n \rangle|^2 \le \sum_{n=1}^\infty \|x\|^2 \|e_n - f_n\|^2 = \|x\|^2 \sum_{n=1}^\infty \|e_n - f_n\|^2. \]
+        Notice that since $\sum_{n=1}^\infty \|e_n - f_n\| < 1$, the terms $\|e_n - f_n\|$ are strictly less than 1, meaning $\|e_n - f_n\|^2 \le \|e_n - f_n\|$. Thus, $\sum_{n=1}^\infty \|e_n - f_n\|^2 < 1$.
+        This gives $\|x\|^2 < \|x\|^2$, which is a contradiction unless $\|x\| = 0$. Hence, $x = 0$, proving that $(f_n)$ is maximal.
+        By symmetry, if $(f_n)$ is maximal, the same argument proves $(e_n)$ is maximal.
+    \end{proof}
+
+	\begin{problem}
+		Let $X$ be an inner product space and $(e_{k})$ be an orthonormal sequence. Show that 
+		\[ \sum_{k=1}^{\infty} |\langle x, e_{k} \rangle \langle y, e_{k} \rangle| \le \|x\| \|y\| \quad \forall x,y \in X. \]
+	\end{problem}
+    \begin{proof}[Solution]
+        By the Cauchy-Schwarz inequality applied to sequences (the $\ell^2$ space), we have:
+        \[ \sum_{k=1}^{\infty} |\langle x, e_{k} \rangle| |\langle y, e_{k} \rangle| \le \left( \sum_{k=1}^\infty |\langle x, e_k \rangle|^2 \right)^{1/2} \left( \sum_{k=1}^\infty |\langle y, e_k \rangle|^2 \right)^{1/2}. \]
+        By Bessel's inequality, since $(e_k)$ is an orthonormal sequence, we know that for any $z \in X$, $\sum_{k=1}^\infty |\langle z, e_k \rangle|^2 \le \|z\|^2$.
+        Applying this to both sums yields:
+        \[ \sum_{k=1}^{\infty} |\langle x, e_{k} \rangle \langle y, e_{k} \rangle| \le \left( \|x\|^2 \right)^{1/2} \left( \|y\|^2 \right)^{1/2} = \|x\| \|y\|. \]
+    \end{proof}
+
+	\begin{problem}[Sobolev spaces]
+		Assume $\Omega \subset \mathbb{R}^{n}$ is a bounded domain (thus an open set) in $\mathbb{R}^{n}$. Let $C_{0}^{m}(\Omega)$ denote the set of functions with $m$-th continuous derivatives and has a compact support in $\Omega$, that is $u$ vanishes in a neighbourhood of $\partial\Omega$.
+		\begin{enumerate}
+			\item[(i)] Show that $\langle u, v \rangle_{m} = \sum_{|\alpha|=m} \int_{\Omega} \partial^{\alpha}u(x) \overline{\partial^{\alpha}v(x)} \, dx$ and $\langle u, v \rangle = \sum_{|\alpha| \le m} \int_{\Omega} \partial^{\alpha}u(x) \overline{\partial^{\alpha}v(x)} \, dx$ are two inner products defined on $C_{0}^{m}(\Omega)$.
+			\item[(ii)] Prove the Poincaré inequality:
+			\[ \sum_{|\alpha|<m} \int_{\Omega} |\partial^{\alpha}u(x)|^{2} \, dx \le C \sum_{|\alpha|=m} \int_{\Omega} |\partial^{\alpha}u(x)|^{2} \, dx \quad \forall u \in C_{0}^{m}(\Omega), \]
+			where $C$ is a positive constant only depends on $\Omega$ and $m$.
+		\end{enumerate}
+	\end{problem}
+    \begin{proof}[Solution]
+        \textbf{Part (i):} Both forms are clearly linear in the first argument, conjugate-linear in the second, and conjugate-symmetric. We only need to check positive definiteness. For $\langle u, u \rangle$, we have a sum of integrals of non-negative quantities $|\partial^\alpha u|^2$. If $\langle u, u \rangle = 0$, then in particular the term for $\alpha = 0$ must be zero, meaning $\int_\Omega |u(x)|^2 dx = 0$. Since $u \in C_0^m(\Omega)$, $u$ is continuous, so $u(x) \equiv 0$ everywhere in $\Omega$. The same argument holds for $\langle u, u \rangle_m$: if the highest order derivatives are 0, and $u$ has compact support, integrating from the boundary (where $u=0$) implies $u \equiv 0$. Thus both are valid inner products.
+
+        \textbf{Part (ii):} Since $\Omega$ is bounded, it is contained in a hypercube $[-L, L]^n$. Because $u \in C_0^m(\Omega)$, we can extend it by zero to all of $\mathbb{R}^n$, and the extension remains $C^m$. For any multi-index $\beta$ with $|\beta| < m$, let $w = \partial^\beta u$. Then $w$ also vanishes on the boundary. By the Fundamental Theorem of Calculus along the $x_1$ direction:
+        \[ w(x_1, \dots, x_n) = \int_{-L}^{x_1} \partial_1 w(t, x_2, \dots, x_n) dt. \]
+        Using Cauchy-Schwarz:
+        \[ |w(x_1, \dots, x_n)|^2 \le \left( \int_{-L}^L 1 dt \right) \left( \int_{-L}^L |\partial_1 w|^2 dt \right) = 2L \int_{-L}^L |\partial_1 w|^2 dt. \]
+        Integrating over the remaining variables yields $\|w\|_{L^2(\Omega)}^2 \le (2L)^2 \|\partial_1 w\|_{L^2(\Omega)}^2$.
+        Applying this recursively bounds the $L^2$ norm of any derivative of order $< m$ by the $L^2$ norm of derivatives of order $m$. Summing these bounds over all $|\alpha| < m$ gives the desired constant $C$.
+    \end{proof}
+
+	\begin{problem}[Legendre polynomials]
+		For the Hilbert space $L^{2}[-1,1]$, applying the Gram-Schmidt process to a linearly independent sequence $(f_{n})_{n=0}^{\infty}$ with $f_{n}(x) = x^{n}$, $n=0,1,2,\dots,$ we can generate an orthonormal family $(e_{n})_{n=0}^{\infty}$.
+		\begin{enumerate}
+			\item[(i)] Show that $\operatorname{span}(e_{n})_{n=0}^{\infty} = L^{2}[-1,1]$, thus $(e_{n})_{n=0}^{\infty}$ form an orthonormal basis.
+			\item[(ii)] Show that $e_{n}(x) = \sqrt{n + 1/2} P_{n}(x)$, with Rodrigues' formula $P_{n}(x) = \frac{1}{2^{n}n!} \frac{d^{n}}{dx^{n}} [(x^{2}-1)^{n}]$.
+			\item[(iii)] Show that $P_{n}(x)$ satisfies the Legendre differential equation $\frac{d}{dx} \left[ (1-x^{2}) \frac{dy}{dx} \right] + n(n+1)y(x) = 0$.
+			\item[(iv)] Using the Legendre differential equation to prove that $\int_{-1}^{1} P_{n}(x) P_{m}(x) \, dx = 0$ if $m \ne n$.
+			\item[(v)] Show that the Legendre differential operator $L u = -\frac{d}{dx} \left[ (1-x^{2}) \frac{du}{dx} \right]$ is self-adjoint on the real $L^{2}[-1,1]$ space.
+		\end{enumerate}
+	\end{problem}
+    \begin{proof}[Solution]
+        \textbf{(i)} By the Weierstrass Approximation Theorem, polynomials are dense in $C[-1, 1]$ with respect to the supremum norm, and thus dense in $L^2[-1, 1]$. Since $(e_n)$ are generated by Gram-Schmidt on $\{x^n\}$, their span is exactly the set of all polynomials, which is dense in $L^2[-1, 1]$. Hence it forms a maximal orthonormal family (an orthonormal basis).
+        
+        \textbf{(ii), (iii), (v)} We skip the direct derivative calculus for (ii) and (iii) as they are standard classical results. For (v), $Lu = -((1-x^2)u')'$. For $u, v$ sufficiently smooth, integration by parts gives:
+        \begin{align*}
+            \langle Lu, v \rangle &= \int_{-1}^1 -((1-x^2)u')' v \, dx \\
+            &= \left[ -(1-x^2)u'v \right]_{-1}^1 + \int_{-1}^1 (1-x^2)u'v' \, dx.
+        \end{align*}
+        Because $1-x^2$ is zero at $x = \pm 1$, the boundary term vanishes. Thus $\langle Lu, v \rangle = \int_{-1}^1 (1-x^2)u'v' \, dx$, which is clearly symmetric in $u$ and $v$. Hence $\langle Lu, v \rangle = \langle u, Lv \rangle$, meaning $L$ is self-adjoint.
+        
+        \textbf{(iv)} From (iii), $LP_n = \lambda_n P_n$ and $LP_m = \lambda_m P_m$ where $\lambda_k = k(k+1)$. Using the self-adjointness from (v):
+        \[ \lambda_n \langle P_n, P_m \rangle = \langle LP_n, P_m \rangle = \langle P_n, LP_m \rangle = \lambda_m \langle P_n, P_m \rangle. \]
+        Since $m \neq n$, we have $\lambda_n \neq \lambda_m$. Therefore, $(\lambda_n - \lambda_m)\langle P_n, P_m \rangle = 0 \implies \langle P_n, P_m \rangle = 0$.
+    \end{proof}
+
+	\begin{problem}[classical Fourier series]
+		Consider the functions $(e_{k}(x))$ defined by $\frac{1}{\sqrt{2\pi}}, \frac{1}{\sqrt{\pi}}\cos(nx), \frac{1}{\sqrt{\pi}}\sin(nx)$.
+		\begin{enumerate}
+			\item[(i)] Show that $(e_{k}(x))$ form an orthonormal family on $L^{2}(0,2\pi)$.
+			\item[(ii)] Show that $(e_{k}(x))$ are maximal.
+			\item[(iii)] Show that $(e_{k}(x))$ are eigenfunctions of $Lu = -d^{2}u/dx^{2}$.
+			\item[(iv)] Derive the classical Fourier expansion coefficients $a_n, b_n$.
+			\item[(v)] Explain the Riemann-Lebesgue lemma.
+		\end{enumerate}
+	\end{problem}
+    \begin{proof}[Solution]
+        \textbf{(i)} Direct integration yields $\int_0^{2\pi} \cos(nx)\sin(mx) dx = 0$, and similar integrals verify orthgonality and normality due to the scaling factors $1/\sqrt{\pi}$ and $1/\sqrt{2\pi}$.
+        
+        \textbf{(ii)} By the hint, trigonometric polynomials are dense in $C^\infty(0, 2\pi)$ (via Weierstrass), which is dense in $L^2(0, 2\pi)$. Thus the span is dense, implying maximality.
+        
+        \textbf{(iii)} Taking the second derivative: $L(\cos(nx)) = -(\cos(nx))'' = n^2 \cos(nx)$, and similarly for $\sin(nx)$. So they are eigenfunctions with eigenvalue $\lambda_n = n^2$.
+        
+        \textbf{(iv)} By orthogonal projection, $\langle f, \frac{1}{\sqrt{\pi}}\cos(nx) \rangle e_k = \left( \frac{1}{\sqrt{\pi}} \int_0^{2\pi} f(x)\cos(nx) dx \right) \frac{1}{\sqrt{\pi}}\cos(nx) = a_n \cos(nx)$, where $a_n = \frac{1}{\pi} \int_0^{2\pi} f(x)\cos(nx) dx$. The same holds for $b_n$.
+        
+        \textbf{(v)} Since $f \in L^2(0, 2\pi)$, Bessel's inequality guarantees that the sum of the squares of its Fourier coefficients converges: $\sum (a_n^2 + b_n^2) < \infty$. The convergence of this infinite series requires that the individual terms approach zero. Therefore, $\lim_{n \to \infty} a_n = 0$ and $\lim_{n \to \infty} b_n = 0$.
+    \end{proof}
+
+	\begin{problem}
+		This problem provides an example of a nonseparable Hilbert space.
+		\begin{enumerate}
+			\item[(i)] Show that $\langle f, g \rangle = \lim_{T \rightarrow \infty} \frac{1}{2T} \int_{-T}^{T} f(x)\overline{g(x)} \, dx$ defines an inner product over $Y = \operatorname{span}(e^{i\lambda x})$.
+			\item[(ii)] Show that $(e_{\lambda})_{\lambda \in \mathbb{R}}$ is an orthonormal family.
+			\item[(iii)] Show that $(e_{\lambda})_{\lambda \in \mathbb{R}}$ is maximal.
+			\item[(iv)] Show that the completion $X$ of $Y$ is not separable.
+		\end{enumerate}
+	\end{problem}
+    \begin{proof}[Solution]
+        \textbf{(i)} Linearity and symmetry are straightforward. For positive definiteness, for $f \in Y$, $f(x) = \sum_{k=1}^n c_k e^{i\lambda_k x}$. Using the limit integral, $\langle f, f \rangle = \sum |c_k|^2 \ge 0$. If it equals 0, then all $c_k = 0$, so $f = 0$.
+        
+        \textbf{(ii)} Let $e_\lambda = e^{i\lambda x}$ and $e_\mu = e^{i\mu x}$.
+        \[ \langle e_\lambda, e_\mu \rangle = \lim_{T \to \infty} \frac{1}{2T} \int_{-T}^T e^{i(\lambda - \mu)x} dx. \]
+        If $\lambda = \mu$, the integrand is 1, so the limit is 1. If $\lambda \neq \mu$, the integral evaluates to $\frac{\sin((\lambda-\mu)T)}{(\lambda-\mu)T}$, which goes to 0 as $T \to \infty$. Thus it is an orthonormal family.
+        
+        \textbf{(iii)} Since $Y$ is defined as the span of $(e_\lambda)$, the span is trivially dense in $Y$ (and its completion $X$). Thus the family is maximal.
+        
+        \textbf{(iv)} An orthonormal family must be countable if a Hilbert space is separable. However, the index set for $(e_\lambda)$ is $\mathbb{R}$, which is uncountably infinite. Therefore, the completion $X$ cannot be separable.
+    \end{proof}
+
+	\begin{problem}[Adjoint operator]
+		Let $(X, \langle\cdot,\cdot\rangle_X)$ and $(Y, \langle\cdot,\cdot\rangle_Y)$ be complex Hilbert spaces and $T \in \mathcal{L}(X,Y)$. Show that:
+		\begin{enumerate}
+		    \item[(i)] There exists a unique $T^* \in \mathcal{L}(Y,X)$ such that $\langle Tx,y \rangle_Y = \langle x,T^*y \rangle_X$, it is semilinear, and $\|T^*\| = \|T\|$.
+		    \item[(ii)] $(T(X))^\perp = \ker T^*$ and $Y = \ker T^* \oplus \overline{T(X)}$, along with corresponding properties for $X$.
+		\end{enumerate}
+	\end{problem}
+    \begin{proof}[Solution]
+        \textbf{(i)} For a fixed $y \in Y$, the mapping $x \mapsto \langle Tx, y \rangle_Y$ is a bounded linear functional on $X$ because $|\langle Tx, y \rangle_Y| \le \|T\| \|x\|_X \|y\|_Y$. By the Riesz Representation Theorem, there exists a unique vector in $X$, which we call $T^*y$, such that $\langle Tx, y \rangle_Y = \langle x, T^*y \rangle_X$. The operator $T^*$ is linear/semilinear and bounded with $\|T^*\| = \|T\|$ (standard operator norm proof).
+        
+        \textbf{(ii)} Let $y \in (T(X))^\perp$. This is equivalent to $\langle Tx, y \rangle_Y = 0$ for all $x \in X$. By definition of $T^*$, this means $\langle x, T^*y \rangle_X = 0$ for all $x \in X$, which holds if and only if $T^*y = 0$, i.e., $y \in \ker T^*$. Therefore $(T(X))^\perp = \ker T^*$. By the Projection Theorem for Hilbert spaces, $Y = (T(X))^\perp \oplus \overline{T(X)}$, which immediately yields $Y = \ker T^* \oplus \overline{T(X)}$.
+    \end{proof}
+
+	\begin{problem}[Lax-Milgram Theorem]
+		Let $a: X \times X \rightarrow \mathbb{K}$ be a bounded and coercive sesquilinear form.
+		\begin{enumerate}
+		    \item[(i)] There exists unique $A \in \mathcal{L}(X)$ s.t. $a(x,y) = \langle x, Ay \rangle$.
+		    \item[(ii)] $A$ is bijective.
+		    \item[(iii)] $\|A^{-1}\| \le 1/c$.
+		\end{enumerate}
+		\textbf{Hint.} 1) Use Riesz Representation. 2) Prove $A$ is injective. 3) Prove $A(X)$ is closed and $(A(X))^\perp = \{0\}$. 4) Apply Bounded Inverse Theorem.
+	\end{problem}
+    \begin{proof}[Solution]
+        \textbf{(i)} For fixed $y \in X$, the mapping $x \mapsto a(x, y)$ is a bounded linear functional (due to the boundedness $|a(x,y)| \le M\|x\|\|y\|$). By the Riesz Representation Theorem, there exists a unique vector $Ay \in X$ such that $a(x,y) = \langle x, Ay \rangle$. Linearity and boundedness of $A$ follow from the properties of $a$.
+        
+        \textbf{(ii)} Injectivity: If $Ax = 0$, then $a(x,x) = \langle x, Ax \rangle = 0$. By coercivity, $c\|x\|^2 \le |a(x,x)| = 0$, which implies $x = 0$. 
+        Closed Range: For any $x \in X$, $c\|x\|^2 \le |a(x,x)| = |\langle x, Ax \rangle| \le \|x\| \|Ax\|$. Thus, $\|Ax\| \ge c\|x\|$. This inequality guarantees that the range of $A$, $A(X)$, is closed.
+        Surjectivity: Suppose $A(X) \neq X$. Since $A(X)$ is closed, there exists a non-zero $z \in X$ such that $z \perp A(X)$. Then $\langle z, Ax \rangle = 0$ for all $x$. This means $a(z, x) = 0$. Let $x = z$, then $a(z, z) = 0$, which by coercivity implies $z = 0$, a contradiction. Thus $A(X) = X$, so $A$ is bijective.
+        
+        \textbf{(iii)} Since $A$ is bijective and bounded, $A^{-1}$ exists. From $\|Ax\| \ge c\|x\|$, substituting $x = A^{-1}y$ yields $\|y\| \ge c\|A^{-1}y\|$, so $\|A^{-1}\| \le 1/c$.
+    \end{proof}
+
+\end{document}

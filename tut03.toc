@@ -1,0 +1,7 @@
+\contentsline {section}{\numberline {1}Assignments}{1}{section.1}%
+\contentsline {section}{\numberline {2}Expansions}{4}{section.2}%
+\contentsline {section}{\numberline {3}Application of B.L.T. Theorem: Weak Derivatives}{8}{section.3}%
+\contentsline {subsection}{\numberline {3.1}The Sobolev Space $W^{1,2}(0,1)$}{9}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Constructing the Weak Derivative Operator via B.L.T.}{9}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}A Concrete Counterexample}{10}{subsection.3.3}%
+\contentsline {section}{\numberline {4}Application of the B.L.T. Theorem: Fourier Transform on $L^2(\mathbb {R})$}{10}{section.4}%
