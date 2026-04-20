@@ -61,27 +61,27 @@ Why do we care about these two specific problems? They perfectly illustrate the 
 \vspace{1.5em}
 
 \begin{example}[Failure of Banach-Steinhaus in Incomplete Spaces]
-    Let $P$ denote the space of all real polynomials[cite: 24]. Given a polynomial
+    Let $P$ denote the space of all real polynomials. Given a polynomial
     \[
         x(t) = \sum_{k=0}^{m}\alpha_{k}t^{k},
     \]
     we define the norm on $P$ as:
     \[
-        \|x\| = \max_{0\le k\le m}|\alpha_{k}| \quad \text{[cite: 25]}.
+        \|x\| = \max_{0\le k\le m}|\alpha_{k}|.
     \]
     Define a sequence of linear functionals $T_n : P \to \mathbb{R}$ by truncating the series:
     \[
-        T_{n}x = \sum_{k=0}^{\min\{m,n\}}\alpha_{k} \quad \text{[cite: 26]}.
+        T_{n}x = \sum_{k=0}^{\min\{m,n\}}\alpha_{k}.
     \]
     Then, the sequence is pointwise bounded, meaning
     \[
-        \sup_{n\ge 0}|T_{n}x| < \infty \quad \forall x \in P \quad \text{[cite: 27]}.
+        \sup_{n\ge 0}|T_{n}x| < \infty \quad \forall x \in P.
     \]
     However, the sequence of operator norms is unbounded, i.e.,
     \[
-        \sup_{n\ge 0}\|T_{n}\| = \infty \quad \text{[cite: 28]}.
+        \sup_{n\ge 0}\|T_{n}\| = \infty.
     \]
-    \textit{Remark:} This explicitly shows that the Banach-Steinhaus theorem fails when the space $X$ is not complete[cite: 29].
+    \textit{Remark:} This explicitly shows that the Banach-Steinhaus theorem fails when the space $X$ is not complete.
 \end{example}
 
 \begin{proof}
@@ -93,7 +93,7 @@ Why do we care about these two specific problems? They perfectly illustrate the 
     \]
     Since the sequence $\{T_n x\}$ becomes constant for large $n$, it is strictly bounded. Thus, we have:
     \[
-        \sup_{n\ge 0}|T_{n}x| < \infty \quad \text{[cite: 27]}.
+        \sup_{n\ge 0}|T_{n}x| < \infty.
     \]
 
     \textbf{Step 2: Unbounded Operator Norms} \medskip
@@ -120,7 +120,7 @@ Why do we care about these two specific problems? They perfectly illustrate the 
     Therefore, the operator norm is exactly $\|T_n\| = n+1$.
     As $n \to \infty$, the norm $\|T_n\| \to \infty$, which rigorously proves:
     \[
-        \sup_{n\ge 0}\|T_{n}\| = \infty \quad \text{[cite: 28]}.
+        \sup_{n\ge 0}\|T_{n}\| = \infty.
     \]
 \end{proof}
 
@@ -129,22 +129,22 @@ Why do we care about these two specific problems? They perfectly illustrate the 
 \vspace{1.5em}
 
 \begin{application}[Divergence of Lagrange Interpolation]
-    For each integer $n\ge 0$, let $0\le t_{0} < t_{1} < \dots < t_{n}\le 1$ be any set of $(n+1)$ distinct nodes[cite: 64]. The Lagrange interpolating operator $L_{n}:C[0,1]\rightarrow P[0,1]$ is defined by:
+    For each integer $n\ge 0$, let $0\le t_{0} < t_{1} < \dots < t_{n}\le 1$ be any set of $(n+1)$ distinct nodes. The Lagrange interpolating operator $L_{n}:C[0,1]\rightarrow P[0,1]$ is defined by:
     \[
-        L_{n}x(t_{k})=x(t_{k}), \quad 0\le k\le n, \quad \text{and} \quad \deg L_{n}x \le n \quad \text{[cite: 65, 66, 67]}.
+        L_{n}x(t_{k})=x(t_{k}), \quad 0\le k\le n, \quad \text{and} \quad \deg L_{n}x \le n.
     \]
     This interpolating polynomial can be explicitly written in the Lagrange basis form:
     \[
-        L_{n}x(t) = \sum_{k=0}^{n}x(t_{k})p_{k}(t) \quad \text{[cite: 69]},
+        L_{n}x(t) = \sum_{k=0}^{n}x(t_{k})p_{k}(t),
     \]
     where the basis polynomials are given by:
     \[
-        p_{k}(t) = \prod_{j\ne k}^{n}\frac{t-t_{j}}{t_{k}-t_{j}} \quad \text{[cite: 70]}.
+        p_{k}(t) = \prod_{j\ne k}^{n}\frac{t-t_{j}}{t_{k}-t_{j}}.
     \]
     We will establish two main results:
     \begin{enumerate}
-        \item The operator norm (the Lebesgue constant) is exactly $\|L_{n}\| = \sup_{0\le t\le 1}\sum_{k=0}^{n}|p_{k}(t)|$[cite: 73].
-        \item Given the known analytical result that $\|L_{n}\| \ge C \log n$ for some constant $C>0$[cite: 84, 85], there exists a continuous function $x\in C[0,1]$ such that $\sup_{n\ge 0}\|L_{n}x\| = \infty$[cite: 86, 87].
+        \item The operator norm (the Lebesgue constant) is exactly $\|L_{n}\| = \sup_{0\le t\le 1}\sum_{k=0}^{n}|p_{k}(t)|$.
+        \item Given the known analytical result that $\|L_{n}\| \ge C \log n$ for some constant $C>0$, there exists a continuous function $x\in C[0,1]$ such that $\sup_{n\ge 0}\|L_{n}x\| = \infty$.
     \end{enumerate}
 \end{application}
 
@@ -165,11 +165,11 @@ Why do we care about these two specific problems? They perfectly illustrate the 
     \]
     To prove this bound is tight, let $\tau \in [0,1]$ be the specific point where the sum attains its global maximum:
     \[
-        \sum_{k=0}^{n} |p_k(\tau)| = \sup_{0\le t\le 1} \sum_{k=0}^{n} |p_k(t)| \quad \text{[cite: 76]}.
+        \sum_{k=0}^{n} |p_k(\tau)| = \sup_{0\le t\le 1} \sum_{k=0}^{n} |p_k(t)|.
     \]
     Construct a piecewise linear continuous function $x_0 \in C[0,1]$ such that it precisely captures the signs of the basis polynomials at the nodes:
     \[
-        x_0(t_k) = \operatorname{sgn} p_k(\tau) \quad \text{for} \quad 0 \le k \le n \quad \text{[cite: 81]},
+        x_0(t_k) = \operatorname{sgn} p_k(\tau) \quad \text{for} \quad 0 \le k \le n,
     \]
     and ensure that $\|x_0\|_\infty = 1$. Evaluating the interpolation polynomial at $t = \tau$ gives:
     \[
@@ -181,14 +181,14 @@ Why do we care about these two specific problems? They perfectly illustrate the 
     \]
     This exact match proves that the operator norm achieves the bound:
     \[
-        \|L_{n}\| = \sup_{0\le t\le 1}\sum_{k=0}^{n}|p_{k}(t)| \quad \text{[cite: 73]}.
+        \|L_{n}\| = \sup_{0\le t\le 1}\sum_{k=0}^{n}|p_{k}(t)|.
     \]
 
     \textbf{Part (ii): Application of the Resonance Theorem} \medskip
 
     We are given the classical lower bound for the Lebesgue constants, which grow at least logarithmically:
     \[
-        \sup_{0\le t\le 1}\sum_{k=0}^{n}|p_{k}^{n}(t)| \ge C \log n \quad \text{[cite: 84]}.
+        \sup_{0\le t\le 1}\sum_{k=0}^{n}|p_{k}^{n}(t)| \ge C \log n.
     \]
     This strictly implies that the sequence of operator norms diverges to infinity:
     \[
@@ -199,11 +199,11 @@ Why do we care about these two specific problems? They perfectly illustrate the 
 
     Because the operator family is \textbf{not uniformly bounded}, we apply the contrapositive of the Uniform Boundedness Principle (Banach-Steinhaus Theorem). It dictates that the family cannot be pointwise bounded on the entire Banach space.
 
-    Consequently, there must exist at least one ``resonant" continuous function $x \in C[0,1]$ such that the sequence of its interpolations is unbounded[cite: 86]:
+    Consequently, there must exist at least one ``resonant" continuous function $x \in C[0,1]$ such that the sequence of its interpolations is unbounded:
     \[
-        \sup_{n\ge 0} \|L_n x\| = \infty \quad \forall n\in\mathbb{N} \quad \text{[cite: 87, 88]}.
+        \sup_{n\ge 0} \|L_n x\| = \infty \quad \forall n\in\mathbb{N}.
     \]
-    \textit{Remark:} This rigorously demonstrates that Lagrange interpolating polynomials do not universally converge uniformly to the original function, completely shattering the intuition that ``more nodes always yield better approximations"[cite: 89].
+    \textit{Remark:} This rigorously demonstrates that Lagrange interpolating polynomials do not universally converge uniformly to the original function, completely shattering the intuition that ``more nodes always yield better approximations".
 \end{proof}
 
 \subsection*{Reflexive space and best approximation}
