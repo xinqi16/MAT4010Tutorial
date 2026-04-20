@@ -1,0 +1,163 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{ifthen}
+\usepackage{tcolorbox}
+\usepackage{marginnote}
+\usepackage[colorlinks=true]{hyperref}
+\usepackage{bookmark}
+\usepackage{xcolor}
+
+\input{note_style.tex}
+
+% If the problem environment is not defined in note_style.tex, it can be defined here:
+\providecommand{\newtheorem}[2]{}
+
+\newcommand{\covered}{\marginnote{\footnotesize Last time covered}}
+
+\begin{document}
+
+\begin{center}
+    \Large\textbf{
+        Functional Analysis\\
+        \vspace{1em}
+        Tutorial 7: Assignments and Review
+    }
+    \date{}
+\end{center}
+\vspace{2em}
+\begin{problem}[Density and the Dual Space]
+Let $X$ be a normed vector space and $Y$ a subspace of $X$. Show that
+\[ \overline{Y} = X \]
+if and only if the only continuous linear functional $f \in X'$ that satisfies
+\[ f(y) = 0 \quad \forall y \in Y \]
+is $f = 0$.
+
+\noindent \textbf{Hint.} For the reverse implication, consider a corollary of the Hahn-Banach theorem regarding the distance from a point to a closed subspace.
+\end{problem}
+
+\begin{problem}[Completeness via Bounded Operators]
+If $X \ne \{0\}$ and $Y$ are real normed vector spaces and the operator space $\mathcal{L}(X,Y)$ is complete, show that $Y$ is complete.
+
+\noindent \textbf{Hint.} To show $Y$ is complete, start with a Cauchy sequence $(y_n)$ in $Y$. Try to construct a corresponding Cauchy sequence of operators $(T_n)$ in $\mathcal{L}(X,Y)$ by utilizing a suitable linear functional $f \in X'$.
+\end{problem}
+
+\begin{problem}[Complex Hahn-Banach Theorem]
+Prove the Hahn-Banach theorem in a complex vector space:
+
+Let $X$ be a complex vector space and let $p: X \rightarrow \mathbb{R}$ be a seminorm on $X$. Let $Y$ be a subspace of $X$ and let $f: Y \rightarrow \mathbb{C}$ be a complex linear functional on $Y$ such that
+\[ |f(y)| \le p(y) \quad \forall y \in Y. \]
+Then there exists a complex linear functional $\tilde{f}: X \rightarrow \mathbb{C}$ such that
+\[ \tilde{f}(y) = f(y) \quad \forall y \in Y, \]
+and
+\[ |\tilde{f}(x)| \le p(x) \quad \forall x \in X. \]
+
+\noindent \textbf{Hint.} Express $f(y)$ in terms of its real and imaginary parts. Find the algebraic relationship between them, and apply the real Hahn-Banach theorem to the real part first. To verify the final bound, consider multiplying $\tilde{f}(x)$ by a suitable phase factor $e^{-i\theta}$.
+\end{problem}
+
+\begin{problem}[Taylor-Foguel Theorem: Unique Extensions]
+A normed vector space $Z$ is called \textit{strictly convex} if $x \ne y$ and $\|x\| = \|y\| = 1$ implies
+\[ \left\| \frac{x+y}{2} \right\| < 1. \]
+
+Let $X$ be a real normed vector space. Prove that if the dual space $X'$ is strictly convex, then every continuous linear functional defined on a subspace $Y \subset X$ has a \textbf{unique} norm-preserving extension to $X$.
+
+\noindent \textbf{Hint.} Assume for the sake of contradiction that there are two distinct norm-preserving extensions. Construct a new extension by averaging them, and use the definition of strict convexity to derive a contradiction.
+\end{problem}
+
+\begin{problem}[Analytic Hahn-Banach and Banach Limits]
+Let $\ell^\infty(\mathbb{R})$ be the space of all bounded real sequences $x = (x_1, x_2, \dots)$ equipped with the supremum norm. Define a functional $p: \ell^\infty(\mathbb{R}) \to \mathbb{R}$ by
+\[ p(x) = \limsup_{n \to \infty} x_n. \]
+\begin{enumerate}
+    \item[(i)] Prove that $p$ is a sublinear functional on $\ell^\infty(\mathbb{R})$.
+    \item[(ii)] Let $c \subset \ell^\infty(\mathbb{R})$ be the subspace of all convergent sequences. Define
+          \[ f(x) = \lim_{n \to \infty} x_n \quad \text{for } x \in c. \]
+          Show that $f$ is a linear functional on $c$ and
+          \[ f(x) \le p(x) \quad \forall x \in c. \]
+    \item[(iii)] Use the Analytic Hahn-Banach Theorem to prove that there exists a bounded linear functional $L \in (\ell^\infty)'$ such that
+          \[ L(x) = \lim_{n \to \infty} x_n \quad \forall x \in c, \]
+          and
+          \[ \liminf_{n \to \infty} x_n \le L(x) \le \limsup_{n \to \infty} x_n \quad \forall x \in \ell^\infty(\mathbb{R}). \]
+\end{enumerate}
+\end{problem}
+\vspace{0.5cm}
+
+\begin{proof}[Completeness via Bounded Operators]
+    Let $(y_n)$ be a Cauchy sequence in $Y$. Since $X \neq \{0\}$, we can pick an element $x_0 \in X$ with $\|x_0\| = 1$. By the Hahn-Banach theorem, there exists a bounded linear functional $f \in X'$ such that $\|f\| = 1$ and $f(x_0) = \|x_0\| = 1$.
+
+    For each $n \in \mathbb{N}$, define an operator $T_n : X \to Y$ by:
+    \[ T_n(x) = f(x)y_n. \]
+    Clearly, each $T_n$ is linear. It is also bounded because $\|T_n(x)\| = |f(x)| \|y_n\| \le \|f\| \|x\| \|y_n\| = \|y_n\| \|x\|$, which shows $T_n \in \mathcal{L}(X,Y)$ and $\|T_n\| \le \|y_n\|$. In fact, $\|T_n(x_0)\| = |f(x_0)| \|y_n\| = 1 \cdot \|y_n\|$, so $\|T_n\| = \|y_n\|$.
+
+    Now consider the difference $T_n - T_m$:
+    \[ (T_n - T_m)(x) = f(x)(y_n - y_m). \]
+    By the same reasoning, $\|T_n - T_m\|_{\mathcal{L}(X,Y)} = \|y_n - y_m\|_Y$. Because $(y_n)$ is Cauchy in $Y$, the sequence $(T_n)$ is Cauchy in $\mathcal{L}(X,Y)$.
+
+    Since $\mathcal{L}(X,Y)$ is complete, there exists a bounded operator $T \in \mathcal{L}(X,Y)$ such that $T_n \to T$ in the operator norm. Now, let $y = T(x_0) \in Y$. We evaluate the distance between $y_n$ and $y$:
+    \[ \|y_n - y\|_Y = \|T_n(x_0) - T(x_0)\|_Y \le \|T_n - T\|_{\mathcal{L}(X,Y)} \|x_0\|_X = \|T_n - T\|_{\mathcal{L}(X,Y)}. \]
+    As $n \to \infty$, $\|T_n - T\|_{\mathcal{L}(X,Y)} \to 0$, which implies $y_n \to y$ in $Y$. Therefore, $Y$ is complete.
+\end{proof}
+
+\vspace{0.5cm}
+
+\begin{proof}[Complex Hahn-Banach Theorem]
+    For any $y \in Y$, decompose $f(y)$ into its real and imaginary parts: $f(y) = u(y) + iv(y)$, where $u(y) = \text{Re}(f(y))$ and $v(y) = \text{Im}(f(y))$. Since $f$ is complex-linear, both $u$ and $v$ are real-linear functionals on $Y$ considered as a real vector space.
+
+    We have $f(iy) = if(y) = i(u(y) + iv(y)) = -v(y) + iu(y)$.
+    Equating the real parts yields $u(iy) = -v(y)$, so $v(y) = -u(iy)$. Thus, we can write:
+    \[ f(y) = u(y) - iu(iy). \]
+    Since $u(y) = \text{Re}(f(y)) \le |f(y)| \le p(y)$ for all $y \in Y$, we can apply the real Hahn-Banach theorem to $u$. There exists a real-linear extension $U: X \to \mathbb{R}$ such that $U(y) = u(y)$ for all $y \in Y$ and $U(x) \le p(x)$ for all $x \in X$.
+
+    Define $\tilde{f}: X \to \mathbb{C}$ by $\tilde{f}(x) = U(x) - iU(ix)$.
+    By construction, $\tilde{f}$ is complex-linear and $\tilde{f}(y) = u(y) - iu(iy) = f(y)$ for $y \in Y$.
+
+    Finally, we show $|\tilde{f}(x)| \le p(x)$. For a fixed $x \in X$, we can write $\tilde{f}(x) = |\tilde{f}(x)| e^{i\theta}$ for some $\theta \in \mathbb{R}$. Then:
+    \[ |\tilde{f}(x)| = e^{-i\theta} \tilde{f}(x) = \tilde{f}(e^{-i\theta}x). \]
+    Since the absolute value is real, the imaginary part of $\tilde{f}(e^{-i\theta}x)$ must be zero. Thus, it equals its real part $U(e^{-i\theta}x)$:
+    \[ |\tilde{f}(x)| = U(e^{-i\theta}x) \le p(e^{-i\theta}x). \]
+    Since $p$ is a seminorm on a complex vector space, $p(\alpha x) = |\alpha| p(x)$. Therefore, $p(e^{-i\theta}x) = |e^{-i\theta}| p(x) = p(x)$. Thus, $|\tilde{f}(x)| \le p(x)$ for all $x \in X$.
+\end{proof}
+
+\vspace{0.5cm}
+
+\begin{proof}[Taylor-Foguel Theorem: Unique Extensions]
+    Let $f \in Y'$ be a continuous linear functional on $Y$. If $f = 0$, the unique norm-preserving extension is trivially $0$. Assume $f \neq 0$, and without loss of generality, assume $\|f\|_{Y'} = 1$.
+
+    Suppose for the sake of contradiction that there are two distinct norm-preserving extensions $F_1, F_2 \in X'$. Thus, $F_1|_Y = f$, $F_2|_Y = f$, $F_1 \neq F_2$, and $\|F_1\|_{X'} = \|F_2\|_{X'} = 1$.
+
+    Define $F = \frac{F_1 + F_2}{2}$. Clearly, $F$ is a continuous linear functional on $X$, and for any $y \in Y$, $F(y) = \frac{F_1(y) + F_2(y)}{2} = \frac{f(y) + f(y)}{2} = f(y)$. Thus, $F$ is also an extension of $f$.
+
+    By the property of extensions, $\|F\|_{X'} \ge \|f\|_{Y'} = 1$.
+    On the other hand, by the triangle inequality, $\|F\|_{X'} = \left\| \frac{F_1 + F_2}{2} \right\|_{X'} \le \frac{\|F_1\|_{X'} + \|F_2\|_{X'}}{2} = 1$.
+    Thus, $\|F\|_{X'} = 1$.
+
+    We now have two distinct elements $F_1, F_2 \in X'$ with $\|F_1\|_{X'} = \|F_2\|_{X'} = 1$, such that their average also has norm $1$:
+    \[ \left\| \frac{F_1 + F_2}{2} \right\|_{X'} = 1. \]
+    This directly contradicts the strict convexity of $X'$. Therefore, the norm-preserving extension must be unique.
+\end{proof}
+
+\vspace{0.5cm}
+
+\begin{proof}[Analytic Hahn-Banach and Banach Limits]
+    \textbf{(i)} We verify subadditivity and positive homogeneity for $p(x) = \limsup_{n \to \infty} x_n$.
+    For any $x, y \in \ell^\infty(\mathbb{R})$, properties of the limit superior give:
+    \[ p(x + y) = \limsup_{n \to \infty} (x_n + y_n) \le \limsup_{n \to \infty} x_n + \limsup_{n \to \infty} y_n = p(x) + p(y). \]
+    For any $\lambda \ge 0$:
+    \[ p(\lambda x) = \limsup_{n \to \infty} (\lambda x_n) = \lambda \limsup_{n \to \infty} x_n = \lambda p(x). \]
+    Thus, $p$ is a sublinear functional.
+
+    \textbf{(ii)} The space $c$ of convergent sequences is a linear subspace of $\ell^\infty(\mathbb{R})$. The limit operation $f(x) = \lim_{n \to \infty} x_n$ is clearly a linear functional on $c$. Because $x \in c$ converges, its limit equals its limit superior. Thus:
+    \[ f(x) = \lim_{n \to \infty} x_n = \limsup_{n \to \infty} x_n = p(x) \quad \forall x \in c. \]
+    Hence $f(x) \le p(x)$ holds trivially (in fact, with equality).
+
+    \textbf{(iii)} By the Analytic form of the Hahn-Banach Theorem, since $f(x) \le p(x)$ on $c$, there exists a linear extension $L: \ell^\infty(\mathbb{R}) \to \mathbb{R}$ such that $L(x) = f(x) = \lim_{n \to \infty} x_n$ for all $x \in c$, and for all $x \in \ell^\infty(\mathbb{R})$:
+    \[ L(x) \le p(x) = \limsup_{n \to \infty} x_n. \]
+    This gives the upper bound. For the lower bound, since $L$ is linear, we substitute $-x$:
+    \[ L(-x) \le p(-x) = \limsup_{n \to \infty} (-x_n) = -\liminf_{n \to \infty} x_n. \]
+    Since $L(-x) = -L(x)$, this yields $-L(x) \le -\liminf_{n \to \infty} x_n$, which means $L(x) \ge \liminf_{n \to \infty} x_n$.
+    Combining them, we obtain:
+    \[ \liminf_{n \to \infty} x_n \le L(x) \le \limsup_{n \to \infty} x_n \quad \forall x \in \ell^\infty(\mathbb{R}). \]
+    Finally, since $-\|x\|_\infty \le \liminf x_n \le L(x) \le \limsup x_n \le \|x\|_\infty$, we have $|L(x)| \le \|x\|_\infty$, proving $L$ is a bounded continuous linear functional, i.e., $L \in (\ell^\infty)'$.
+\end{proof}
+\end{document}
